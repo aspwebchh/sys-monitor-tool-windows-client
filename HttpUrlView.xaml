@@ -1,0 +1,59 @@
+﻿<Window x:Class="sys_monitor_tool.HttpUrlView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:sys_monitor_tool"
+        mc:Ignorable="d"
+        Title="HttpUrl监控详细信息" Height="280" Width="500" WindowStartupLocation="CenterOwner">
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary  Source="Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <Grid Margin="0,10,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <WrapPanel Grid.Row="0" Grid.Column="0" Style="{StaticResource ViewPageRow}">
+            <TextBlock Text="监控名称：" Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
+            <TextBox Name="Name" IsReadOnly="True" BorderThickness="0"></TextBox>
+        </WrapPanel>
+        <WrapPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource ViewPageRow}">
+            <TextBlock Text="监控链接："  Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
+            <TextBox Name="URL" IsReadOnly="True" BorderThickness="0" MaxWidth="380">
+                <TextBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="前往" Click="MenuItem_Click"></MenuItem>
+                        <MenuItem Header="复制" Click="MenuItem_Click_1"></MenuItem>
+                    </ContextMenu>
+                </TextBox.ContextMenu>
+            </TextBox>
+        </WrapPanel>
+        <WrapPanel Grid.Row="2" Grid.Column="0" Style="{StaticResource ViewPageRow}">
+            <TextBlock Text="请求方法："  Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
+            <TextBlock Name="Method"></TextBlock>
+        </WrapPanel>
+        <WrapPanel Grid.Row="3" Grid.Column="0" Style="{StaticResource ViewPageRow}">
+            <TextBlock Text="当前状态："  Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
+            <TextBox Name="Status" IsReadOnly="True" BorderThickness="0" MaxWidth="380"></TextBox>
+        </WrapPanel>
+        <WrapPanel Grid.Row="4" Grid.Column="0" Style="{StaticResource ViewPageRow}">
+            <TextBlock Text="通知人员："  Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
+            <TextBlock Name="NoticeTarget" MaxWidth="380"></TextBlock>
+        </WrapPanel>
+        
+    </Grid>
+</Window>

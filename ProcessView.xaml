@@ -1,0 +1,44 @@
+﻿<Window x:Class="sys_monitor_tool.ProcessView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:sys_monitor_tool"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Title="进程监控详细信息" Height="200" Width="500">
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary  Source="Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <Grid Margin="0,10,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <WrapPanel Grid.Row="0" Grid.Column="0" Style="{StaticResource ViewPageRow}">
+            <TextBlock Text="进程：" Style="{StaticResource ViewPageFieldTitle}"></TextBlock>
+            <TextBox Name="Name" IsReadOnly="True" BorderThickness="0"></TextBox>
+        </WrapPanel>
+
+        <WrapPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource ViewPageRow}">
+            <TextBlock Text="状态：" Style="{StaticResource ViewPageFieldTitle}"></TextBlock>
+            <TextBlock Name="Status"></TextBlock>
+        </WrapPanel>
+
+        <WrapPanel Grid.Row="2" Grid.Column="0" Style="{StaticResource ViewPageRow}">
+            <TextBlock Text="通知人员：" Style="{StaticResource ViewPageFieldTitle}"></TextBlock>
+            <TextBox Name="NoticeTarget" IsReadOnly="True" BorderThickness="0"></TextBox>
+        </WrapPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServerList>
+  <ServerItem ID="F7FC5212C867830044277E6F75336E59">
+    <Name>本测试环境</Name>
+    <Host>127.0.0.1</Host>
+    <HttpPort>2003</HttpPort>
+    <Status>未知</Status>
+  </ServerItem>
+  <ServerItem ID="1FEBEAFC296CC82A7B028D77A052CA23">
+    <Name>chhblog.com</Name>
+    <Host>chhblog.com</Host>
+    <HttpPort>2003</HttpPort>
+    <Status>未知</Status>
+  </ServerItem>
+</ServerList>

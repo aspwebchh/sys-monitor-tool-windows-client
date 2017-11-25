@@ -1,0 +1,58 @@
+﻿<Window x:Class="sys_monitor_tool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:sys_monitor_tool"
+        mc:Ignorable="d"
+        Title="服务器监控工具" WindowStartupLocation="CenterScreen" Width="600" Height="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button HorizontalAlignment="Left" VerticalAlignment="Center" Padding="6,3" Click="Button_Click" Margin="8,0,0,0">
+            <TextBlock>添加监听</TextBlock>
+        </Button>
+
+        <ListView  x:Name="listView" ItemsSource="{Binding}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" MouseLeftButtonUp="listView_SelectionChanged" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Height" Value="30" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="编辑" Click="Button_Click_1"></MenuItem>
+                    <MenuItem Header="删除" Click="Button_Click_2"></MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="150" >
+                            <GridViewColumnHeader Content="名称" Padding="5" HorizontalContentAlignment="Left"/>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Host}"  Width="200">
+                            <GridViewColumnHeader Content="主机地址" Padding="5" HorizontalContentAlignment="Left"/>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=HttpPort}" Width="80">
+                            <GridViewColumnHeader Content="http端口" Padding="5" HorizontalContentAlignment="Left"/>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumnHeader Content="http状态" Padding="5" HorizontalContentAlignment="Left"/>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock  Text="{Binding Status}" Foreground="{Binding StatusColor}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
