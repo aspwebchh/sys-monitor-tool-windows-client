@@ -113,9 +113,5 @@ namespace sys_monitor_tool
             serverManager.Owner = this;
             serverManager.Show();
         }
-
-        private void listView_MouseDoubleClick( object sender, MouseButtonEventArgs e ) {
-
-        }
     }
 }

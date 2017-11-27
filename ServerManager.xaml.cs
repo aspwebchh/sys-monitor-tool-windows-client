@@ -31,27 +31,28 @@ namespace sys_monitor_tool
         public ServerManager(ListenServerItem listenServerItem)
         {
             InitializeComponent();
-            this.listenServerItem = listenServerItem;
-            this.Title = listenServerItem.Name;
 
-            this.dataSource = new DataSource(listenServerItem.HttpUrl);
-            this.uiMySql = new UIMySQL(this, dataSource);
-            this.uiProcess = new UIProcess(this, dataSource);
-            this.uiHttpUrl = new UIHttpUrl(this, dataSource);
-            this.uiUser = new UIUser( this, dataSource );
+            new Thread(() => {
+                Dispatcher.Invoke(() => {
+                    this.listenServerItem = listenServerItem;
+                    this.Title = listenServerItem.Name;
 
-            CheckServerStatus();
+                    this.dataSource = new DataSource(listenServerItem.HttpUrl);
+                    this.uiMySql = new UIMySQL(this, dataSource);
+                    this.uiProcess = new UIProcess(this, dataSource);
+                    this.uiHttpUrl = new UIHttpUrl(this, dataSource);
+                    this.uiUser = new UIUser(this, dataSource);
+
+                    CheckServerStatus();
+                });
+            }).Start();
         }
 
         private void CheckServerStatus() {
-            new Thread(() => {
-                var result = HttpHelper.CheckHttp(listenServerItem.HttpUrl);
-                Dispatcher.Invoke(() => {
-                    if( !result.Item1 ) {
-                        MsgBox.Alert(result.Item2);
-                    }
-                });
-            }).Start();
+            var result = HttpHelper.CheckHttp(listenServerItem.HttpUrl);
+            if( !result.Item1 ) {
+                MsgBox.Alert(result.Item2);
+            }
         }
 
 
