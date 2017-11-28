@@ -10,6 +10,7 @@ namespace sys_monitor_tool
 {
     class HttpHelper
     {
+
         public static string Post(string url, Dictionary<string, string> dic)
         {
             string result = "";
@@ -44,21 +45,47 @@ namespace sys_monitor_tool
             return result;
         }
 
-        public static string Get(string url, Dictionary<string, string> dic)
+
+        private static string HashPassword( string key, string timestamp ) {
+            var express = key + "!single!dog!" + timestamp;
+            return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile( express, "MD5" ).ToLower();
+        }
+
+
+        private static string GetAuthString( string key ) {
+            var timestamp = DateTime.Now.Ticks.ToString();
+            var secret = HashPassword( key, timestamp );
+            var builder = new StringBuilder();
+            if( !string.IsNullOrEmpty( key ) ) {
+                builder.AppendFormat( "{0}={1}", "timestamp", timestamp );
+                builder.Append( "&" );
+                builder.AppendFormat( "{0}={1}", "secret", secret );
+            }
+            return builder.ToString();
+        }
+
+        public static string Get(string url, Dictionary<string, string> dic, string key)
         {
-            StringBuilder builder = new StringBuilder();
-            builder.Append(url);
+            StringBuilder builder = new StringBuilder(url);
             if (dic.Count > 0)
             {
-                builder.Append("?");
+                builder.Append( "?" );
                 int i = 0;
                 foreach (var item in dic)
                 {
-                    if (i > 0)
+                    if( i > 0 ) {
                         builder.Append("&");
+                    }
                     builder.AppendFormat("{0}={1}", item.Key, item.Value);
                     i++;
                 }
+            }
+            if( dic.Count == 0 ) {
+                builder.Append( "?" );
+                builder.Append( GetAuthString( key ) );
+            } else {
+                builder.Append( "&" );
+                builder.Append( GetAuthString( key ) );
             }
             try {
                 HttpWebRequest req = ( HttpWebRequest ) WebRequest.Create(builder.ToString());
@@ -70,10 +97,14 @@ namespace sys_monitor_tool
                         }
                     }
                 }
-            }catch(Exception ex) {
+            } catch(WebException wex) {
+                if( wex.Message.IndexOf( "403" ) != -1 ) {
+                    MsgBox.Alert( "无法获取数据，与服务器的通信密钥不匹配" );
+                }
+                return "";
+            }catch(Exception ex) {  
                 return "";
             }
-
         }
 
         public static Tuple<bool,string> CheckHttp( string httpUrl) {

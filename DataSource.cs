@@ -10,6 +10,8 @@ namespace sys_monitor_tool
 {
    public class DataSource
     {
+        private readonly string key;
+
         private readonly string baseUrl;
         private readonly string userListUrl;
         private readonly string addUserUrl;
@@ -40,9 +42,10 @@ namespace sys_monitor_tool
 
 
 
-        public DataSource(string baseUrl)
+        public DataSource(ListenServerItem listenServerItem )
         {
-            this.baseUrl = baseUrl;
+            this.key = listenServerItem.Key;
+            this.baseUrl =  listenServerItem.HttpUrl;
 
             this.userListUrl = baseUrl + "/user_list";
             this.addUserUrl = baseUrl + "/user_add";
@@ -77,7 +80,7 @@ namespace sys_monitor_tool
         #region
         public List<User> GetUserList()
         {
-            var json = HttpHelper.Get(this.userListUrl,new Dictionary<string, string>());
+            var json = HttpHelper.Get(this.userListUrl,new Dictionary<string, string>(), this.key);
             List<User> userList = JsonConvert.DeserializeObject<List<User>>(json);
             if( userList == null) {
                 return new List<User>();
@@ -92,7 +95,7 @@ namespace sys_monitor_tool
             dic.Add("name", name);
             dic.Add("mobile", mobile);
             dic.Add("email", email);
-            var result = HttpHelper.Get(this.addUserUrl, dic);
+            var result = HttpHelper.Get(this.addUserUrl, dic, this.key );
             return JsonConvert.DeserializeObject<ServerResult<Object>>(result);
         }
 
@@ -103,7 +106,7 @@ namespace sys_monitor_tool
             dic.Add("mobile", mobile);
             dic.Add("email", email);
             dic.Add("id", id.ToString());
-            var result = HttpHelper.Get(this.updateUserUrl, dic);
+            var result = HttpHelper.Get(this.updateUserUrl, dic, this.key );
             return JsonConvert.DeserializeObject<ServerResult<Object>>(result);
         }
 
@@ -111,7 +114,7 @@ namespace sys_monitor_tool
         {
             var dic = new Dictionary<string, string>();
             dic.Add("id", id.ToString());
-            var result = HttpHelper.Get(this.deleteUserUrl, dic);
+            var result = HttpHelper.Get(this.deleteUserUrl, dic, this.key );
             return JsonConvert.DeserializeObject<ServerResult<Object>>(result);
         }
 
@@ -119,14 +122,14 @@ namespace sys_monitor_tool
         {
             var dic = new Dictionary<string, string>();
             dic.Add("id", id.ToString());
-            var result = HttpHelper.Get(this.userItemUrl, dic);
+            var result = HttpHelper.Get(this.userItemUrl, dic, this.key );
             return JsonConvert.DeserializeObject<User>(result);
         }
         #endregion
 
         #region
         public List<MySql> GetMySqlList() {
-            var json = HttpHelper.Get(this.mySqlListUrl, new Dictionary<string, string>());
+            var json = HttpHelper.Get(this.mySqlListUrl, new Dictionary<string, string>(), this.key );
             List<MySql> mySqlList = JsonConvert.DeserializeObject<List<MySql>>(json);
             if( mySqlList == null) {
                 mySqlList = new List<MySql>();
@@ -144,7 +147,7 @@ namespace sys_monitor_tool
             dic.Add("db_name", db_name);
             dic.Add("name", name);
             dic.Add("notice_target", notice_target);
-            var result = HttpHelper.Get(this.addMySqlUrl, dic);
+            var result = HttpHelper.Get(this.addMySqlUrl, dic, this.key );
             return JsonConvert.DeserializeObject<ServerResult<Object>>(result);
         }
 
@@ -158,14 +161,14 @@ namespace sys_monitor_tool
             dic.Add("name", name);
             dic.Add("notice_target", notice_target);
             dic.Add("id", id.ToString());
-            var result = HttpHelper.Get(this.updateMySqlUrl, dic);
+            var result = HttpHelper.Get(this.updateMySqlUrl, dic, this.key );
             return JsonConvert.DeserializeObject<ServerResult<Object>>(result);
         }
 
         public ServerResult<Object> DeleteMySql( int id ) {
             var dic = new Dictionary<string, string>();
             dic.Add("id", id.ToString());
-            var result = HttpHelper.Get(this.deleteMySqlUrl, dic);
+            var result = HttpHelper.Get(this.deleteMySqlUrl, dic, this.key );
             return JsonConvert.DeserializeObject<ServerResult<Object>>(result);
         }
 
@@ -173,13 +176,13 @@ namespace sys_monitor_tool
         public MySql GetMySqlItem( int id ) {
             var dic = new Dictionary<string, string>();
             dic.Add("id", id.ToString());
-            var result = HttpHelper.Get(this.mySqlItemUrl, dic);
+            var result = HttpHelper.Get(this.mySqlItemUrl, dic, this.key );
             return JsonConvert.DeserializeObject<MySql>(result);
         }
 
         public List<EntityStatus> GetMySqlStatus() {
             var dic = new Dictionary<string, string>();
-            var result = HttpHelper.Get(this.mySqlStatusUrl, dic);
+            var result = HttpHelper.Get(this.mySqlStatusUrl, dic, this.key );
             return JsonConvert.DeserializeObject<List<EntityStatus>>(result);
         }
 
@@ -189,7 +192,7 @@ namespace sys_monitor_tool
         #region
 
         public List<Process> GetProcessList() {
-            var json = HttpHelper.Get(this.processListUrl, new Dictionary<string, string>());
+            var json = HttpHelper.Get(this.processListUrl, new Dictionary<string, string>(), this.key );
             List<Process> result = JsonConvert.DeserializeObject<List<Process>>(json);
             if( result == null ) {
                 return new List<Process>();
@@ -202,7 +205,7 @@ namespace sys_monitor_tool
             var dic = new Dictionary<string, string>();
             dic.Add("process_name", processName);
             dic.Add("notice_target", notice_target);
-            var result = HttpHelper.Get(this.addProcessUrl, dic);
+            var result = HttpHelper.Get(this.addProcessUrl, dic, this.key );
             return JsonConvert.DeserializeObject<ServerResult<Object>>(result);
         }
 
@@ -211,28 +214,28 @@ namespace sys_monitor_tool
             dic.Add("process_name", processName);
             dic.Add("notice_target", notice_target);
             dic.Add("id", id.ToString());
-            var result = HttpHelper.Get(this.updateProcessUrl, dic);
+            var result = HttpHelper.Get(this.updateProcessUrl, dic, this.key );
             return JsonConvert.DeserializeObject<ServerResult<Object>>(result);
         }
 
         public ServerResult<Object> DeleteProcess( int id ) {
             var dic = new Dictionary<string, string>();
             dic.Add("id", id.ToString());
-            var result = HttpHelper.Get(this.deleteProcessUrl, dic);
+            var result = HttpHelper.Get(this.deleteProcessUrl, dic, this.key );
             return JsonConvert.DeserializeObject<ServerResult<Object>>(result);
         }
 
         public Process GetProcessItem( int id ) {
             var dic = new Dictionary<string, string>();
             dic.Add("id", id.ToString());
-            var result = HttpHelper.Get(this.processItemUrl, dic);
+            var result = HttpHelper.Get(this.processItemUrl, dic, this.key );
             return JsonConvert.DeserializeObject<Process>(result);
         }
 
        
         public List<EntityStatus> GetProcessStatus() {
             var dic = new Dictionary<string, string>();
-            var result = HttpHelper.Get(this.processStatusUrl,dic);
+            var result = HttpHelper.Get(this.processStatusUrl,dic, this.key );
             return JsonConvert.DeserializeObject<List<EntityStatus>>(result);
         }
 
@@ -241,7 +244,7 @@ namespace sys_monitor_tool
 
         #region
         public List<HttpUrl> GetUrlList() {
-            var json = HttpHelper.Get(this.urlListUrl, new Dictionary<string, string>());
+            var json = HttpHelper.Get(this.urlListUrl, new Dictionary<string, string>(), this.key );
             List<HttpUrl> result = JsonConvert.DeserializeObject<List<HttpUrl>>(json);
             if( result == null ) {
                 return new List<HttpUrl>();
@@ -256,7 +259,7 @@ namespace sys_monitor_tool
             dic.Add("method", method);
             dic.Add("url", url);
             dic.Add("notice_target", notice_target);
-            var result = HttpHelper.Get(this.addUrlUrl, dic);
+            var result = HttpHelper.Get(this.addUrlUrl, dic, this.key );
             return JsonConvert.DeserializeObject<ServerResult<Object>>(result);
         }
 
@@ -267,28 +270,28 @@ namespace sys_monitor_tool
             dic.Add("url", url);
             dic.Add("notice_target", notice_target);
             dic.Add("id", id.ToString());
-            var result = HttpHelper.Get(this.updateUrlUrl, dic);
+            var result = HttpHelper.Get(this.updateUrlUrl, dic, this.key );
             return JsonConvert.DeserializeObject<ServerResult<Object>>(result);
         }
 
         public ServerResult<Object> DeleteUrl( int id ) {
             var dic = new Dictionary<string, string>();
             dic.Add("id", id.ToString());
-            var result = HttpHelper.Get(this.deleteUrlUrl, dic);
+            var result = HttpHelper.Get(this.deleteUrlUrl, dic, this.key );
             return JsonConvert.DeserializeObject<ServerResult<Object>>(result);
         }
 
         public HttpUrl GetUrlItem( int id ) {
             var dic = new Dictionary<string, string>();
             dic.Add("id", id.ToString());
-            var result = HttpHelper.Get(this.urlItemUrl, dic);
+            var result = HttpHelper.Get(this.urlItemUrl, dic, this.key );
             return JsonConvert.DeserializeObject<HttpUrl>(result);
         }
 
 
         public List<EntityStatus> GetUrlStatus() {
             var dic = new Dictionary<string, string>();
-            var result = HttpHelper.Get(this.urlStatusUrl, dic);
+            var result = HttpHelper.Get(this.urlStatusUrl, dic, this.key );
             return JsonConvert.DeserializeObject<List<EntityStatus>>(result);
         }
         #endregion

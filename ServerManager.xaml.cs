@@ -37,7 +37,7 @@ namespace sys_monitor_tool
                     this.listenServerItem = listenServerItem;
                     this.Title = listenServerItem.Name;
 
-                    this.dataSource = new DataSource(listenServerItem.HttpUrl);
+                    this.dataSource = new DataSource(listenServerItem);
                     this.uiMySql = new UIMySQL(this, dataSource);
                     this.uiProcess = new UIProcess(this, dataSource);
                     this.uiHttpUrl = new UIHttpUrl(this, dataSource);
