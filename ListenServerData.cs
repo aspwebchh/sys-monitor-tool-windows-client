@@ -48,7 +48,7 @@ namespace sys_monitor_tool
             return result.FirstOrDefault();
         }
 
-        public static bool AddServer(string name, string host, int httpPort)
+        public static bool AddServer(string name, string host, int httpPort, string key)
         {
             var ID = GenID(host, httpPort);
             var xmlDoc = new XmlDocument();
@@ -65,11 +65,14 @@ namespace sys_monitor_tool
             newHttpPort.InnerText = httpPort.ToString();
             var newStatus = xmlDoc.CreateElement("Status");
             newStatus.InnerText = "未知";
+            var newKey = xmlDoc.CreateElement( "Key" );
+            newKey.InnerText = key;
             var newServerItem = xmlDoc.CreateElement("ServerItem");
             newServerItem.AppendChild(newName);
             newServerItem.AppendChild(newHost);
             newServerItem.AppendChild(newHttpPort);
             newServerItem.AppendChild(newStatus);
+            newServerItem.AppendChild( newKey );
             newServerItem.SetAttribute("ID", ID);
             var serverListElement = xmlDoc.GetElementsByTagName("ServerList")[0];
             serverListElement.AppendChild(newServerItem);
@@ -83,7 +86,11 @@ namespace sys_monitor_tool
             {
                 var dataSet = new DataSet();
                 dataSet.ReadXml(SRC_FILE_NAME);
-                return dataSet.Tables[0];
+                var dt = dataSet.Tables[0];
+                if( !dt.Columns.Contains( "Key" ) ) {
+                    dt.Columns.Add( "Key", typeof( string ) );
+                }
+                return dt;
             }
             catch (Exception ex)
             {
@@ -115,6 +122,10 @@ namespace sys_monitor_tool
             var host = ele.GetElementsByTagName("Host")[0].InnerText;
             var httpPort = ele.GetElementsByTagName("HttpPort")[0].InnerText;
             var name = ele.GetElementsByTagName("Name") [0].InnerText;
+            var key = ele.GetElementsByTagName( "Key" );
+            if( key.Count > 0 ) {
+                result.Key = key[ 0 ].InnerText;
+            }
             result.Name = name;
             result.Host = host;
             result.HttpPort = httpPort;

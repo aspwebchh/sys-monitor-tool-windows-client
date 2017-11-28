@@ -35,6 +35,7 @@ namespace sys_monitor_tool
             Host.Text = listenServerItem.Host;
             HttpPort.Text = listenServerItem.HttpPort;
             Name.Text = listenServerItem.Name;
+            Key.Text = listenServerItem.Key;
             this.id = listenServerItem.ID;
 
         }
@@ -44,7 +45,7 @@ namespace sys_monitor_tool
                 return "主机地址为空";
             }
             if( string.IsNullOrEmpty(port)) {
-                return "端口好为空";
+                return "端口号为空";
             }
             if(!Validate.IsHost(host)) {
                 return "主机地址格式不正确";
@@ -52,6 +53,7 @@ namespace sys_monitor_tool
             if(! Validate.IsInteger(port)) {
                 return "端口号格式不正确";
             }
+
             var serverItem = new ListenServerItem();
             serverItem.Host = host;
             serverItem.HttpPort = port;
@@ -67,12 +69,14 @@ namespace sys_monitor_tool
             var host = Host.Text.Trim();
             var httpPort = HttpPort.Text.Trim() ;
             var name = Name.Text.Trim();
+            var key = Key.Text.Trim();
             var validate = new Validate();
             validate.AddCmd(new ValidateCmd(name, "名称未输入"));
             validate.AddCmd(new ValidateCmd(host, "主机地址未输入"));
             validate.AddCmd(new ValidateCmd(httpPort, "http端口未输入"));
             validate.AddCmd(new ValidateCmd("主机地址格式不正确", () => Validate.IsHost(host)));
             validate.AddCmd(new ValidateCmd("http端口格式不正确", () => Validate.IsInteger(httpPort)));
+            validate.AddCmd( new ValidateCmd( key, "通信密钥未输入" ) );
             if( !validate.Execute()) {
                 return;
             }
@@ -82,7 +86,7 @@ namespace sys_monitor_tool
             {
                 ListenServerData.Delete(id);
             }
-            var success =  ListenServerData.AddServer(name, host, int.Parse( httpPort ));
+            var success =  ListenServerData.AddServer(name, host, int.Parse( httpPort ), key);
             if( !success )
             {
                 MsgBox.Alert("添加失败，主机和端口已存在");
