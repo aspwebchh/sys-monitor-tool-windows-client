@@ -101,6 +101,7 @@
     <Compile Include="UIBase.cs" />
     <Compile Include="UIHttpUrl.cs" />
     <Compile Include="UIMySQL.cs" />
+    <Compile Include="UIOverview.cs" />
     <Compile Include="UIProcess.cs" />
     <Compile Include="UIUser.cs" />
     <Compile Include="UpdateStatusTaskManager.cs" />

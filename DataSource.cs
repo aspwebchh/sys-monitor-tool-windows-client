@@ -183,6 +183,9 @@ namespace sys_monitor_tool
         public List<EntityStatus> GetMySqlStatus() {
             var dic = new Dictionary<string, string>();
             var result = HttpHelper.Get(this.mySqlStatusUrl, dic, this.key );
+            if( string.IsNullOrEmpty( result ) ) {
+                return new List<EntityStatus>();
+            }
             return JsonConvert.DeserializeObject<List<EntityStatus>>(result);
         }
 
@@ -236,6 +239,9 @@ namespace sys_monitor_tool
         public List<EntityStatus> GetProcessStatus() {
             var dic = new Dictionary<string, string>();
             var result = HttpHelper.Get(this.processStatusUrl,dic, this.key );
+            if( string.IsNullOrEmpty( result ) ) {
+                return new List<EntityStatus>();
+            }
             return JsonConvert.DeserializeObject<List<EntityStatus>>(result);
         }
 
@@ -292,6 +298,9 @@ namespace sys_monitor_tool
         public List<EntityStatus> GetUrlStatus() {
             var dic = new Dictionary<string, string>();
             var result = HttpHelper.Get(this.urlStatusUrl, dic, this.key );
+            if( string.IsNullOrEmpty( result ) ) {
+                return new List<EntityStatus>();
+            }
             return JsonConvert.DeserializeObject<List<EntityStatus>>(result);
         }
         #endregion

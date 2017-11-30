@@ -27,6 +27,7 @@ namespace sys_monitor_tool
         UIProcess uiProcess;
         UIHttpUrl uiHttpUrl;
         UIUser uiUser;
+        UIOverview uiOverview;
 
         public ServerManager(ListenServerItem listenServerItem)
         {
@@ -42,6 +43,7 @@ namespace sys_monitor_tool
                     this.uiProcess = new UIProcess(this, dataSource);
                     this.uiHttpUrl = new UIHttpUrl(this, dataSource);
                     this.uiUser = new UIUser(this, dataSource);
+                    this.uiOverview = new UIOverview( this, dataSource );
 
                     CheckServerStatus();
                 });
@@ -160,6 +162,10 @@ namespace sys_monitor_tool
                 return;
             }
             ProcessView.NewWindow(this, dataItem, dataSource);
+        }
+
+        private void TreeViewItem_Selected_8( object sender, RoutedEventArgs e ) {
+            this.uiOverview.show();
         }
     }
 }

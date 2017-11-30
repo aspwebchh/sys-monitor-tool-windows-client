@@ -20,6 +20,7 @@ namespace sys_monitor_tool {
         }
 
         protected void HideAllElement() {
+            window.Overview.Visibility = Visibility.Collapsed;
             window.MySqlList.Visibility = Visibility.Collapsed;
             window.MySql_Form.Visibility = Visibility.Collapsed;
             window.ProcessList.Visibility = Visibility.Collapsed;

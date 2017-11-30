@@ -26,6 +26,7 @@
         </Grid.ColumnDefinitions>
 
         <TreeView x:Name="treeView" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Width="180" Padding="10">
+            <TreeViewItem Header="信息概览"  Style="{StaticResource TreeViewItem}" Selected="TreeViewItem_Selected_8"/>
             <TreeViewItem Header="MySQL监控" Name="TreeViewItem_MySql" IsExpanded="True" Style="{StaticResource TreeViewItem}">
                 <TreeViewItem Header="监控列表" Selected="TreeViewItem_Selected"  Style="{StaticResource TreeViewItem}"/>
                 <TreeViewItem Header="监控添加" Selected="TreeViewItem_Selected_1"  Style="{StaticResource TreeViewItem}"/>
@@ -48,7 +49,71 @@
 
             <StackPanel Name="ContentPanel" >
                 <Image gif:ImageBehavior.AnimatedSource="/loading.gif" Width="40" Height="40" Name="Loading" Margin="20,20,0,0" Visibility="Collapsed" HorizontalAlignment="Left"></Image>
-                <ListView x:Name="MySqlList" ItemsSource="{Binding}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="MySqlList_MouseLeftButtonUp">
+
+                <StackPanel x:Name="Overview">
+
+                    <GroupBox Padding="20" Margin="10" BorderBrush="#ccc">
+                        <GroupBox.Header>
+                            <Label Content="MySQL监控"/>
+                        </GroupBox.Header>
+                        <WrapPanel>
+                            <WrapPanel Width="150">
+                                <TextBlock Text="监控总数"></TextBlock>
+                                <TextBlock Text="" Margin="10,0,0,0" Name="MySQL_All"></TextBlock>
+                            </WrapPanel>
+                            <WrapPanel  Width="150">
+                                <TextBlock Text="正常个数"></TextBlock>
+                                <TextBlock Text="" Margin="10,0,0,0" Name="MySQL_Normal"></TextBlock>
+                            </WrapPanel>
+                            <WrapPanel  Width="150">
+                                <TextBlock Text="异常个数" Name="MySQL_Error_Title"></TextBlock>
+                                <TextBlock Text="" Margin="10,0,0,0" Name="MySQL_Error"></TextBlock>
+                            </WrapPanel>
+                        </WrapPanel>
+                    </GroupBox>
+
+                    <GroupBox Padding="20" Margin="10" BorderBrush="#ccc">
+                        <GroupBox.Header>
+                            <Label Content="进程监控"/>
+                        </GroupBox.Header>
+                        <WrapPanel>
+                            <WrapPanel Width="150">
+                                <TextBlock Text="监控总数"></TextBlock>
+                                <TextBlock Text="" Margin="10,0,0,0" Name="Process_All"></TextBlock>
+                            </WrapPanel>
+                            <WrapPanel  Width="150">
+                                <TextBlock Text="正常个数"></TextBlock>
+                                <TextBlock Text="" Margin="10,0,0,0" Name="Process_Normal"></TextBlock>
+                            </WrapPanel>
+                            <WrapPanel  Width="150">
+                                <TextBlock Text="异常个数" Name="Process_Error_Title"></TextBlock>
+                                <TextBlock Text="" Margin="10,0,0,0" Name="Process_Error"></TextBlock>
+                            </WrapPanel>
+                        </WrapPanel>
+                    </GroupBox>
+
+                    <GroupBox Padding="20" Margin="10" BorderBrush="#ccc">
+                        <GroupBox.Header>
+                            <Label Content="Url监控"/>
+                        </GroupBox.Header>
+                        <WrapPanel>
+                            <WrapPanel Width="150">
+                                <TextBlock Text="监控总数"></TextBlock>
+                                <TextBlock Text="" Margin="10,0,0,0" Name="Url_All"></TextBlock>
+                            </WrapPanel>
+                            <WrapPanel  Width="150">
+                                <TextBlock Text="正常个数"></TextBlock>
+                                <TextBlock Text="" Margin="10,0,0,0" Name="Url_Normal"></TextBlock>
+                            </WrapPanel>
+                            <WrapPanel  Width="150">
+                                <TextBlock Text="异常个数" Name="Url_Error_Title"></TextBlock>
+                                <TextBlock Text="" Margin="10,0,0,0" Name="Url_Error"></TextBlock>
+                            </WrapPanel>
+                        </WrapPanel>
+                    </GroupBox>
+                </StackPanel>
+             
+                <ListView x:Name="MySqlList" ItemsSource="{Binding}" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="MySqlList_MouseLeftButtonUp">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="Height" Value="30" />
@@ -138,7 +203,7 @@
                 </StackPanel>
 
 
-                <ListView x:Name="ProcessList" ItemsSource="{Binding}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="ProcessList_MouseLeftButtonUp">
+                <ListView x:Name="ProcessList" ItemsSource="{Binding}" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="ProcessList_MouseLeftButtonUp">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="Height" Value="30" />
@@ -187,9 +252,7 @@
                     </WrapPanel>
                 </StackPanel>
 
-
-
-                <ListView x:Name="HttpUrlList" ItemsSource="{Binding}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="HttpUrlList_SelectionChanged">
+                <ListView x:Name="HttpUrlList" ItemsSource="{Binding}" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="HttpUrlList_SelectionChanged">
                     <ListView.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="打开链接" Click="MenuItem_Click">
@@ -261,7 +324,7 @@
                     </WrapPanel>
                 </StackPanel>
 
-                <ListView x:Name="UserList" ItemsSource="{Binding}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}">
+                <ListView x:Name="UserList" ItemsSource="{Binding}" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="Height" Value="30" />
