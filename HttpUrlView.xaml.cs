@@ -42,6 +42,7 @@ namespace sys_monitor_tool {
             Name.Text = httpUrl.Description;
             URL.Text = httpUrl.Url;
             Method.Text = httpUrl.Method;
+            Delay.Text = httpUrl.Delay + " ms";
 
             new Thread(()=> {
                 Dispatcher.Invoke(() => {

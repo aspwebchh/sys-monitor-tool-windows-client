@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:sys_monitor_tool"
         mc:Ignorable="d"
-        Title="MySQL监控详细信息" Height="390" Width="500" WindowStartupLocation="CenterOwner">
+        Title="MySQL监控详细信息" Height="430" Width="500" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,6 +16,7 @@
 
     <Grid Margin="0,10,0,0">
         <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
@@ -63,8 +64,11 @@
             <TextBlock Text="状态：" Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
             <TextBlock Name="Status" MaxWidth="400"></TextBlock>
         </WrapPanel>
-
         <WrapPanel Grid.Row="7" Grid.Column="0" Style="{StaticResource ViewPageRow}">
+            <TextBlock Text="延时：" Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
+            <TextBox Name="Delay" IsReadOnly="True" BorderThickness="0"></TextBox>
+        </WrapPanel>
+        <WrapPanel Grid.Row="8" Grid.Column="0" Style="{StaticResource ViewPageRow}">
             <TextBlock Text="通知人员：" Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
             <TextBox Name="NoticeTarget" IsReadOnly="True" BorderThickness="0" MaxWidth="380"></TextBox>
         </WrapPanel>

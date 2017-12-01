@@ -10,6 +10,11 @@ namespace sys_monitor_tool.entity {
         public bool Status { get; set; }
         public string Message { get; set; }
 
+        public int Delay {
+            get;
+            set;
+        }
+
         public string StatusDesc {
             get {
                 return Status ? "正常" : "异常";

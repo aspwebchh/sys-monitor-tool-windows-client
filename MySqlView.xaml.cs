@@ -45,6 +45,7 @@ namespace sys_monitor_tool {
             User.Text = mysql.User;
             Password.Text = mysql.Password;
             Database.Text = mysql.Database;
+            Delay.Text = mysql.Delay + " ms";
 
             new Thread(() => {
                 Dispatcher.Invoke(() => {

@@ -23,10 +23,10 @@ namespace sys_monitor_tool {
             this.FillData();    
         }
 
-        private void SetColorAsRed( TextBlock titleField, TextBlock valField  ) {
-            var red = new SolidColorBrush( ( (Color)ColorConverter.ConvertFromString( "Red" ) ) );
-            titleField.Foreground = red;
-            valField.Foreground = red;
+        private void SetColorAs( TextBlock titleField, TextBlock valField, string color  ) {
+            var scb = new SolidColorBrush( ( (Color)ColorConverter.ConvertFromString( color ) ) );
+            titleField.Foreground = scb;
+            valField.Foreground = scb;
         }
 
         private void FillData() {
@@ -42,7 +42,9 @@ namespace sys_monitor_tool {
                     window.MySQL_Normal.Text = mySqlNormal.ToString();
                     window.MySQL_Error.Text = mySqlError.ToString();
                     if( mySqlError > 0 ) {
-                        SetColorAsRed( window.MySQL_Error_Title, window.MySQL_Error );
+                        SetColorAs( window.MySQL_Error_Title, window.MySQL_Error, "Red" );
+                    } else {
+                        SetColorAs( window.MySQL_Error_Title, window.MySQL_Error, "Black" );
                     }
 
                 } );
@@ -59,8 +61,9 @@ namespace sys_monitor_tool {
                     window.Process_Normal.Text = processNormal.ToString();
                     window.Process_Error.Text = processError.ToString();
                     if( processError > 0 ) {
-                        SetColorAsRed( window.Process_Error_Title, window.Process_Error );
-
+                        SetColorAs( window.Process_Error_Title, window.Process_Error,"Red" );
+                    } else {
+                        SetColorAs( window.MySQL_Error_Title, window.MySQL_Error, "Black" );
                     }
                 } );
 
@@ -77,7 +80,9 @@ namespace sys_monitor_tool {
                     window.Url_Normal.Text = urlNormal.ToString();
                     window.Url_Error.Text = urlError.ToString();
                     if( urlError > 0 ) {
-                        SetColorAsRed( window.Url_Error_Title,  window.Url_Error );
+                        SetColorAs( window.Url_Error_Title, window.Url_Error, "Red" );
+                    } else {
+                        SetColorAs( window.Url_Error_Title, window.Url_Error, "Black" );
                     }
                 } );
 

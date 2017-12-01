@@ -122,7 +122,7 @@
 
                     <ListView.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="编辑" Click="Button_Click_1">
+                            <MenuItem Header="修改" Click="Button_Click_1">
                             </MenuItem>
                             <MenuItem Header="删除" Click="Button_Click">
                             </MenuItem>
@@ -150,6 +150,14 @@
                                 </GridViewColumn>
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=Database}" Width="130">
                                     <GridViewColumnHeader Content="数据库" Style="{StaticResource ListViewColumnHeader}"/>
+                                </GridViewColumn>
+                                <GridViewColumn  Width="80">
+                                    <GridViewColumnHeader Content="延时(ms)"  Style="{StaticResource ListViewColumnHeader}"/>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  Text="{Binding Delay}" Foreground="{Binding StatusColor}"></TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn  Width="80">
                                     <GridViewColumnHeader Content="状态" Style="{StaticResource ListViewColumnHeader}"/>
@@ -257,7 +265,7 @@
                         <ContextMenu>
                             <MenuItem Header="打开链接" Click="MenuItem_Click">
                             </MenuItem>
-                            <MenuItem Header="编辑" Click="Button_Click_4">
+                            <MenuItem Header="修改" Click="Button_Click_4">
                             </MenuItem>
                             <MenuItem Header="删除" Click="Button_Click_3">
                             </MenuItem>
@@ -281,6 +289,14 @@
 
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=Url}" Width="500">
                                     <GridViewColumnHeader Content="URL"  Style="{StaticResource ListViewColumnHeader}"/>
+                                </GridViewColumn>
+                                <GridViewColumn  Width="80">
+                                    <GridViewColumnHeader Content="延时(ms)"  Style="{StaticResource ListViewColumnHeader}"/>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  Text="{Binding Delay}" Foreground="{Binding StatusColor}"></TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn  Width="80">
                                     <GridViewColumnHeader Content="状态" Style="{StaticResource ListViewColumnHeader}"/>
@@ -332,7 +348,7 @@
                     </ListView.ItemContainerStyle>
                     <ListView.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="编辑" Click="Button_Click_5">
+                            <MenuItem Header="修改" Click="Button_Click_5">
                             </MenuItem>
                             <MenuItem Header="删除" Click="Button_Click_6">
                             </MenuItem>

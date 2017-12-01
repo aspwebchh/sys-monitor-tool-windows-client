@@ -134,6 +134,14 @@ namespace sys_monitor_tool
             if( mySqlList == null) {
                 mySqlList = new List<MySql>();
             }
+            var status = GetMySqlStatus();
+            mySqlList = mySqlList.Select( item => {
+                var statusItem = status.Find( sItem => sItem.ID == item.ID );
+                if( statusItem != null ) {
+                    item.Delay = statusItem.Delay;
+                }
+                return item;
+            } ).ToList();
             mySqlList.Sort(( a, b ) => b.ID - a.ID);
             return mySqlList;
         }
@@ -177,7 +185,16 @@ namespace sys_monitor_tool
             var dic = new Dictionary<string, string>();
             dic.Add("id", id.ToString());
             var result = HttpHelper.Get(this.mySqlItemUrl, dic, this.key );
-            return JsonConvert.DeserializeObject<MySql>(result);
+            var rt = JsonConvert.DeserializeObject<MySql>( result );
+            if( rt == null ) {
+                return new MySql();
+            }
+            var status = GetMySqlStatus();
+            var currStatus = status.Find( item => item.ID == rt.ID );
+            if( currStatus != null ) {
+                rt.Delay = currStatus.Delay;
+            }
+            return rt;
         }
 
         public List<EntityStatus> GetMySqlStatus() {
@@ -251,10 +268,18 @@ namespace sys_monitor_tool
         #region
         public List<HttpUrl> GetUrlList() {
             var json = HttpHelper.Get(this.urlListUrl, new Dictionary<string, string>(), this.key );
-            List<HttpUrl> result = JsonConvert.DeserializeObject<List<HttpUrl>>(json);
+            var result = JsonConvert.DeserializeObject<List<HttpUrl>>(json);
             if( result == null ) {
                 return new List<HttpUrl>();
             }
+            var status = GetUrlStatus();
+            result = result.Select( item => {
+                var statusItem = status.Find( sItem => sItem.ID == item.ID );
+                if( statusItem != null ) {
+                    item.Delay = statusItem.Delay;
+                }
+                return item;
+            } ).ToList();
             result.Sort((a, b) => b.ID - a.ID);
             return result;
         }
@@ -291,7 +316,16 @@ namespace sys_monitor_tool
             var dic = new Dictionary<string, string>();
             dic.Add("id", id.ToString());
             var result = HttpHelper.Get(this.urlItemUrl, dic, this.key );
-            return JsonConvert.DeserializeObject<HttpUrl>(result);
+            var rt = JsonConvert.DeserializeObject<HttpUrl>(result);
+            if( rt == null ) {
+                return new HttpUrl();
+            }
+            var status = GetUrlStatus();
+            var currStatus = status.Find( item => item.ID == rt.ID );
+            if( currStatus != null ) {
+                rt.Delay = currStatus.Delay;
+            }
+            return rt;
         }
 
 

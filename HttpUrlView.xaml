@@ -17,11 +17,12 @@
     
     <Grid Margin="0,10,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -51,6 +52,10 @@
             <TextBox Name="Status" IsReadOnly="True" BorderThickness="0" MaxWidth="380"></TextBox>
         </WrapPanel>
         <WrapPanel Grid.Row="4" Grid.Column="0" Style="{StaticResource ViewPageRow}">
+            <TextBlock Text="请求延时："  Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
+            <TextBlock Name="Delay"></TextBlock>
+        </WrapPanel>
+        <WrapPanel Grid.Row="5" Grid.Column="0" Style="{StaticResource ViewPageRow}">
             <TextBlock Text="通知人员："  Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
             <TextBlock Name="NoticeTarget" MaxWidth="380"></TextBlock>
         </WrapPanel>

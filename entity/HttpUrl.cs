@@ -10,7 +10,10 @@ namespace sys_monitor_tool.entity {
         public string Description { get; set; }
         public string Method { get; set; }
         public string Url { get; set; }
-
+        public int Delay {
+            get;
+            set;
+        }
 
         public List<int> NoticeTargetItems {
             get {
