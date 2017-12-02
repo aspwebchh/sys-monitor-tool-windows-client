@@ -23,5 +23,11 @@ namespace sys_monitor_tool.entity
                 return "http://" + Host + ":" + HttpPort;
             }
         }
+
+        public bool IsValid {
+            get {
+                return !string.IsNullOrEmpty( Host ) && !string.IsNullOrEmpty( HttpPort );
+            }
+        }
     }
 }

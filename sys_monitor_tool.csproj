@@ -73,6 +73,7 @@
     <Compile Include="Common.cs" />
     <Compile Include="DataSource.cs" />
     <Compile Include="entity\EntityBase.cs" />
+    <Compile Include="entity\SmtpMailInfo.cs" />
     <Compile Include="entity\MySql.cs" />
     <Compile Include="entity\Process.cs" />
     <Compile Include="entity\EntityStatus.cs" />
@@ -97,6 +98,9 @@
     </Compile>
     <Compile Include="ServerManager.xaml.cs">
       <DependentUpon>ServerManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ServerProperty.xaml.cs">
+      <DependentUpon>ServerProperty.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIBase.cs" />
     <Compile Include="UIHttpUrl.cs" />
@@ -139,6 +143,10 @@
     <Page Include="ServerManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ServerProperty.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Style.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -40,7 +40,7 @@ namespace sys_monitor_tool
 
         }
 
-        public string CheckHttp( string host, string port ) {
+        public static string CheckHttp( string host, string port ) {
             if( string.IsNullOrEmpty(host)) {
                 return "主机地址为空";
             }
@@ -64,36 +64,38 @@ namespace sys_monitor_tool
         }
 
 
+        public static bool Save( string id, string host, string httpPort, string name, string key) {
+            var validate = new Validate();
+            validate.AddCmd( new ValidateCmd( name, "名称未输入" ) );
+            validate.AddCmd( new ValidateCmd( host, "主机地址未输入" ) );
+            validate.AddCmd( new ValidateCmd( httpPort, "http端口未输入" ) );
+            validate.AddCmd( new ValidateCmd( "主机地址格式不正确", () => Validate.IsHost( host ) ) );
+            validate.AddCmd( new ValidateCmd( "http端口格式不正确", () => Validate.IsInteger( httpPort ) ) );
+            if( !validate.Execute() ) {
+                return false;
+            }
+
+
+            if( !string.IsNullOrEmpty( id ) ) {
+                ListenServerData.Delete( id );
+            }
+            var success = ListenServerData.AddServer( name, host, int.Parse( httpPort ), key );
+            if( !success ) {
+                MsgBox.Alert( "添加失败，主机和端口已存在" );
+                return false;
+            } else {
+                return true;
+            }
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var host = Host.Text.Trim();
             var httpPort = HttpPort.Text.Trim() ;
             var name = Name.Text.Trim();
             var key = Key.Text.Trim();
-            var validate = new Validate();
-            validate.AddCmd(new ValidateCmd(name, "名称未输入"));
-            validate.AddCmd(new ValidateCmd(host, "主机地址未输入"));
-            validate.AddCmd(new ValidateCmd(httpPort, "http端口未输入"));
-            validate.AddCmd(new ValidateCmd("主机地址格式不正确", () => Validate.IsHost(host)));
-            validate.AddCmd(new ValidateCmd("http端口格式不正确", () => Validate.IsInteger(httpPort)));
-            //validate.AddCmd( new ValidateCmd( key, "通信密钥未输入" ) );
-            if( !validate.Execute()) {
-                return;
-            }
-            
 
-            if( !string.IsNullOrEmpty(this.id))
-            {
-                ListenServerData.Delete(id);
-            }
-            var success =  ListenServerData.AddServer(name, host, int.Parse( httpPort ), key);
-            if( !success )
-            {
-                MsgBox.Alert("添加失败，主机和端口已存在");
-                return;
-            } else {
-                MsgBox.Alert("操作完成");
-            }
+            Save( this.id, host, httpPort, name, key );
             (this.Owner as MainWindow).Refresh();
             this.Close();
         }

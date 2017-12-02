@@ -26,8 +26,8 @@
             </ListView.ItemContainerStyle>
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="编辑" Click="Button_Click_1"></MenuItem>
                     <MenuItem Header="删除" Click="Button_Click_2"></MenuItem>
+                    <MenuItem Header="属性" Click="MenuItem_Click"></MenuItem>
                 </ContextMenu>
             </ListView.ContextMenu>
             <ListView.View>

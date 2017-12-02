@@ -40,6 +40,9 @@ namespace sys_monitor_tool
         private readonly string urlItemUrl;
         private readonly string urlStatusUrl;
 
+        private readonly string urlGetMailInfo;
+        private readonly string urlChangeMailInfo;
+        private readonly string urlTestSendMail;
 
 
         public DataSource(ListenServerItem listenServerItem )
@@ -75,6 +78,44 @@ namespace sys_monitor_tool
             this.urlItemUrl = baseUrl + "/url_item";
             this.urlStatusUrl = baseUrl + "/url_status";
 
+            this.urlGetMailInfo = baseUrl + "/get_mail_info";
+            this.urlChangeMailInfo = baseUrl + "/change_mail_info";
+            this.urlTestSendMail = baseUrl + "/test_send_mail";
+        }
+
+        private ServerResult<object> CheckResult( ServerResult<object> result ) {
+            if( result == null ) {
+                result = new ServerResult<object>();
+                result.Code = ServerResult<object>.CODE_ERROR;
+                result.Message = "设置失败， 可能是服务器与客户端软件版本不一致引起的";
+            }
+            return result;
+        }
+
+        public ServerResult<object> TestSendMail( string email ) {
+            var dic = new Dictionary<string, string>();
+            dic.Add( "email", email );
+            var json = HttpHelper.Get( this.urlTestSendMail,dic, this.key );
+            var result = JsonConvert.DeserializeObject<ServerResult<object>>( json );
+            return CheckResult( result );
+        }
+
+        public SmtpMailInfo GetSmtpMailInfo() {
+            var json = HttpHelper.Get( this.urlGetMailInfo, new Dictionary<string, string>(), this.key );
+            var mailInfo = JsonConvert.DeserializeObject<SmtpMailInfo>( json );
+            return mailInfo;
+        }
+
+        public ServerResult<object> ChangeSmtpMailInfo( SmtpMailInfo mailInfo ) {
+            var dic = new Dictionary<string, string>();
+            dic.Add( "email", mailInfo.Email );
+            dic.Add( "password", mailInfo.Password );
+            dic.Add( "smtp_server", mailInfo.SmtpServer );
+            dic.Add( "smtp_server_port", mailInfo.SmtpPServerPort.ToString() );
+            dic.Add( "ssl", mailInfo.SSL.ToString() );
+            var json = HttpHelper.Get( this.urlChangeMailInfo, dic, key );
+            var result = JsonConvert.DeserializeObject<ServerResult<object>>( json );
+            return CheckResult( result );
         }
 
         #region

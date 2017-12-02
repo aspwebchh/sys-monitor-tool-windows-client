@@ -98,7 +98,6 @@ namespace sys_monitor_tool
             if (confirmToDel == MessageBoxResult.Yes)
             {
                 ListenServerData.Delete(id);
-                MsgBox.Alert("删除成功");
                 Refresh();
             }
         }
@@ -112,6 +111,13 @@ namespace sys_monitor_tool
             var serverManager = new ServerManager(serverItem);
             serverManager.Owner = this;
             serverManager.Show();
+        }
+
+        private void MenuItem_Click( object sender, RoutedEventArgs e ) {
+            var id = GetSelectedItemID();
+            var property = new ServerProperty( id );
+            property.Owner = this;
+            property.Show();
         }
     }
 }
