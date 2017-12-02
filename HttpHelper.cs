@@ -98,9 +98,7 @@ namespace sys_monitor_tool
                     }
                 }
             } catch(WebException wex) {
-                if( wex.Message.IndexOf( "403" ) != -1 ) {
-                    MsgBox.Alert( "无法获取数据，与服务器的通信密钥不匹配" );
-                }
+                AuthMessageManager.ShowMessage(url, wex.Message);
                 return "";
             }catch(Exception ex) {  
                 return "";

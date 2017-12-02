@@ -63,7 +63,7 @@ namespace sys_monitor_tool {
                     if( processError > 0 ) {
                         SetColorAs( window.Process_Error_Title, window.Process_Error,"Red" );
                     } else {
-                        SetColorAs( window.MySQL_Error_Title, window.MySQL_Error, "Black" );
+                        SetColorAs( window.Process_Error_Title, window.MySQL_Error, "Black" );
                     }
                 } );
 

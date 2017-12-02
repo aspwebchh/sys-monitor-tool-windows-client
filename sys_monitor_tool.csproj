@@ -70,6 +70,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AuthMessageManager.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="DataSource.cs" />
     <Compile Include="entity\EntityBase.cs" />
