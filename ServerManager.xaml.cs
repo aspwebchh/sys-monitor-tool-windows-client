@@ -33,6 +33,8 @@ namespace sys_monitor_tool
         {
             InitializeComponent();
 
+            AuthMessageManager.Clear(listenServerItem.HttpUrl);
+
             new Thread(() => {
                 Dispatcher.Invoke(() => {
                     this.listenServerItem = listenServerItem;
