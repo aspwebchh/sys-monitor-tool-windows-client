@@ -8,19 +8,13 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Documents;
-using System.Timers;
 
 namespace sys_monitor_tool {
     class UIOverview :UIBase{
         public UIOverview( ServerManager window, DataSource dataSource ) : base(window, dataSource){
-            var timer = new System.Timers.Timer();
-            timer.Enabled = true;
-            timer.Interval = 10000;
-            timer.Start();
-            timer.Elapsed += ( o, e ) => {
+            UpdateStatusTaskManager.Execute( window, UpdateStatusTaskType.Overview, delegate () {
                 this.FillData();
-            };
-            this.FillData();    
+            } );  
         }
 
         private void SetColorAs( TextBlock titleField, TextBlock valField, string color  ) {

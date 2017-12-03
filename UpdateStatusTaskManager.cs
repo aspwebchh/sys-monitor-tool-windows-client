@@ -11,17 +11,34 @@ namespace sys_monitor_tool {
         Process,
         MySql,
         HttpUrl,
-        Server
+        Server,
+        Overview
     }
 
-    class UpdateStatusTaskManager {
-        private static Dictionary<UpdateStatusTaskType, Timer> dic = new Dictionary<UpdateStatusTaskType, Timer>();
+    static class UpdateStatusTaskManager {
+        private static Dictionary<string, Timer> dic = new Dictionary<string, Timer>();
 
-        public static void Execute( UpdateStatusTaskType type, Action action ) {
-            if( dic.ContainsKey(type)) {
-                var found = dic [type];
+        private static string Key( Window window, UpdateStatusTaskType ustt ) {
+            var hashCode = window.GetHashCode();
+            var key = hashCode + "-" + ustt;
+            return key;
+        }
+
+        public static void Remove( Window window, UpdateStatusTaskType ustt ) {
+            var key = Key( window, ustt );
+            if( dic.ContainsKey( key ) ) {
+                var found = dic[ key ];
                 found.Stop();
-                dic.Remove(type);
+                dic.Remove( key );
+            }
+        }
+
+        public static void Execute( Window window, UpdateStatusTaskType ustt, Action action ) {
+            var key = Key( window, ustt );
+            if( dic.ContainsKey(key)) {
+                var found = dic [key];
+                found.Stop();
+                dic.Remove(key);
             }
 
             var timer = new Timer();
@@ -33,7 +50,7 @@ namespace sys_monitor_tool {
             };
 
             action();
-            dic.Add(type, timer);
+            dic.Add(key, timer);
         }
     }
 }

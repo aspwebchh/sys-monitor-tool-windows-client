@@ -90,7 +90,9 @@ namespace sys_monitor_tool
                 if( !dt.Columns.Contains( "Key" ) ) {
                     dt.Columns.Add( "Key", typeof( string ) );
                 }
-                return dt;
+                var dv = dt.DefaultView;
+                dv.Sort = "ID desc";
+                return dv.ToTable();
             }
             catch (Exception ex)
             {

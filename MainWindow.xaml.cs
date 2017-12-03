@@ -31,7 +31,7 @@ namespace sys_monitor_tool
 
         public void Refresh()
         {
-            UpdateStatusTaskManager.Execute(UpdateStatusTaskType.Server, () => {
+            UpdateStatusTaskManager.Execute(this, UpdateStatusTaskType.Server, () => {
                 var serverData = ListenServerData.GetServerList();
                 serverData.Columns.Add(new DataColumn("StatusColor", typeof(string)));
                 foreach( DataRow row in serverData.Rows ) {

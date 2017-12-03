@@ -32,7 +32,7 @@ namespace sys_monitor_tool {
         }
 
         protected void UpdateStatus(ListView listView, List<entity.EntityBase> data, UpdateStatusTaskType type, GetStatus getStatus) {
-            UpdateStatusTaskManager.Execute(type, () => {
+            UpdateStatusTaskManager.Execute(window, type, () => {
                 data = data.Select(item => {
                     var status = getStatus();
                     var result = status.Where(n => n.ID == item.ID);
@@ -41,6 +41,7 @@ namespace sys_monitor_tool {
                         var desc = first.StatusDesc;
                         item.Status = desc;
                         item.StatusColor = first.StatusTextColor;
+                        item.Delay = first.Delay;
                     }
                     return item;
                 }).ToList();

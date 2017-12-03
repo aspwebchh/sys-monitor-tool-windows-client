@@ -30,6 +30,10 @@ namespace sys_monitor_tool {
             InitializeComponent();
         }
 
+        public void ShowMailTab() {
+            Content.SelectedIndex = 1;
+        }
+
         public void Tab_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
             var index = Content.SelectedIndex;
             if( index == 0 ) {

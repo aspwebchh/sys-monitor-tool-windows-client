@@ -14,6 +14,12 @@ namespace sys_monitor_tool.entity {
             set { status = value; }
         }
 
+        public int Delay {
+            get;
+            set;
+        }
+
+
         public string StatusColor { get; set; }
     }
 }

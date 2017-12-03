@@ -45,15 +45,41 @@ namespace sys_monitor_tool
                     this.uiUser = new UIUser(this, dataSource);
                     this.uiOverview = new UIOverview( this, dataSource );
 
-                    CheckServerStatus();
+                    if( CheckServerStatus() ) {
+                        CheckMailStmpServer();
+                    }
                 });
             }).Start();
+
+            this.Closed += ( o, e ) => {
+                UpdateStatusTaskManager.Remove( this, UpdateStatusTaskType.HttpUrl );
+                UpdateStatusTaskManager.Remove( this, UpdateStatusTaskType.MySql );
+                UpdateStatusTaskManager.Remove( this, UpdateStatusTaskType.Process );
+                UpdateStatusTaskManager.Remove( this, UpdateStatusTaskType.Overview );
+            };
         }
 
-        private void CheckServerStatus() {
+        private void CheckMailStmpServer() {
+            var mailInfo = dataSource.GetSmtpMailInfo();
+            if( mailInfo == null ) {
+                //服务器还未更新至支持发件箱配置的版本
+                return;
+            }
+            if( !mailInfo.IsValid ) {
+                var serverProperty = new ServerProperty( listenServerItem.ID );
+                serverProperty.Owner = this;
+                serverProperty.Show();
+                serverProperty.ShowMailTab();
+            }
+        }
+
+        private bool CheckServerStatus() {
             var result = HttpHelper.CheckHttp(listenServerItem.HttpUrl);
             if( !result.Item1 ) {
-                MsgBox.Alert(result.Item2);
+                MsgBox.Alert( result.Item2 );
+                return false;
+            } else {
+                return true;
             }
         }
 

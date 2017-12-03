@@ -30,5 +30,14 @@ namespace sys_monitor_tool.entity {
             get;
             set;
         }
+
+        public bool IsValid {
+            get {
+                return !( string.IsNullOrEmpty( Email ) ||
+                    string.IsNullOrEmpty( Password ) ||
+                    string.IsNullOrEmpty( SmtpServer ) ||
+                    ( SmtpPServerPort <= 0 ));
+            }
+        }
     }
 }

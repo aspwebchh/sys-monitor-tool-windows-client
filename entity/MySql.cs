@@ -64,11 +64,6 @@ namespace sys_monitor_tool.entity
             }
         }
 
-        public int Delay {
-            get;
-            set;
-        }
-
         public List<int> NoticeTargetItems {
             get {
                 return Common.ToIntList(NoticeTarget);
