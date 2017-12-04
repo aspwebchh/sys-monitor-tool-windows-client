@@ -7,11 +7,11 @@ using System.Windows;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("sys_monitor_tool")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle( "系统可用性监控工具" )]
+[assembly: AssemblyDescription( "系统可用性监控工具" )]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("sys_monitor_tool")]
+[assembly: AssemblyCompany( "陈宏鸿" )]
+[assembly: AssemblyProduct( "系统可用性监控工具" )]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
