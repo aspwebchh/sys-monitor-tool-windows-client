@@ -79,7 +79,7 @@ namespace sys_monitor_tool {
             } );
         }
 
-        private void handleMailTab() {
+        private bool handleMailTab(  bool isClose ) {
             var mail = Mail.Text.Trim();
             var password = Password.Text.Trim();
             var smtpServer = SmtpServer.Text.Trim();
@@ -96,7 +96,7 @@ namespace sys_monitor_tool {
                 return Validate.IsInteger( port );
             } ) );
             if( !validate.Execute() ) {
-                return;
+                return false;
             }
             var mailInfo = new SmtpMailInfo();
             mailInfo.Email = mail;
@@ -108,9 +108,12 @@ namespace sys_monitor_tool {
             var result = dataSource.ChangeSmtpMailInfo( mailInfo );
             if( result.Code == ServerResult<object>.CODE_ERROR ) {
                 MessageBox.Show( result.Message );
-            } else {
+                return false;
+            }
+            if(isClose) {
                 Close();
             }
+            return true;
             
         }
 
@@ -134,7 +137,7 @@ namespace sys_monitor_tool {
             if( Content.SelectedIndex == 0 ) {
                 handleServerTab();
             } else if( Content.SelectedIndex == 1 ) {
-                handleMailTab();
+                handleMailTab(true);
             }
         }
 
@@ -149,8 +152,10 @@ namespace sys_monitor_tool {
             if( !validate.Execute() ) {
                 return;
             }
-            var result = dataSource.TestSendMail( mail );
-            MsgBox.Alert( result.Message );
+            if( handleMailTab( false ) ) {
+                var result = dataSource.TestSendMail( mail );
+                MsgBox.Alert( result.Message );
+            }
         }
 
         private void CheckServer_Click( object sender, RoutedEventArgs e ) {
