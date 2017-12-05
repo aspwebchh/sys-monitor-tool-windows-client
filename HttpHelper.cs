@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace sys_monitor_tool
 {
@@ -76,7 +77,7 @@ namespace sys_monitor_tool
                     if( i > 0 ) {
                         builder.Append("&");
                     }
-                    builder.AppendFormat("{0}={1}", item.Key, item.Value);
+                    builder.AppendFormat("{0}={1}", item.Key, HttpUtility.UrlEncode(item.Value));
                     i++;
                 }
             }
