@@ -28,6 +28,7 @@ namespace sys_monitor_tool
         UIHttpUrl uiHttpUrl;
         UIUser uiUser;
         UIOverview uiOverview;
+        UIHistory uiHistory;
 
         public ServerManager(ListenServerItem listenServerItem)
         {
@@ -46,6 +47,7 @@ namespace sys_monitor_tool
                     this.uiHttpUrl = new UIHttpUrl(this, dataSource);
                     this.uiUser = new UIUser(this, dataSource);
                     this.uiOverview = new UIOverview( this, dataSource );
+                    this.uiHistory = new UIHistory( this, dataSource );
 
                     if( CheckServerStatus() ) {
                         CheckMailStmpServer();
@@ -194,6 +196,14 @@ namespace sys_monitor_tool
 
         private void TreeViewItem_Selected_8( object sender, RoutedEventArgs e ) {
             this.uiOverview.show();
+        }
+
+        private void TreeViewItem_Selected_9( object sender, RoutedEventArgs e ) {
+            this.uiHistory.InitHistoryList();
+        }
+
+        private void HistoryList_MouseLeftButtonUp( object sender, MouseButtonEventArgs e ) {
+
         }
     }
 }

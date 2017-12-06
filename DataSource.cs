@@ -44,6 +44,8 @@ namespace sys_monitor_tool
         private readonly string urlChangeMailInfo;
         private readonly string urlTestSendMail;
 
+        private readonly string urlHistoryList;
+
 
         public DataSource(ListenServerItem listenServerItem )
         {
@@ -81,6 +83,8 @@ namespace sys_monitor_tool
             this.urlGetMailInfo = baseUrl + "/get_mail_info";
             this.urlChangeMailInfo = baseUrl + "/change_mail_info";
             this.urlTestSendMail = baseUrl + "/test_send_mail";
+
+            this.urlHistoryList = baseUrl + "/history_file_list";
         }
 
         private ServerResult<object> CheckResult( ServerResult<object> result ) {
@@ -377,6 +381,15 @@ namespace sys_monitor_tool
                 return new List<EntityStatus>();
             }
             return JsonConvert.DeserializeObject<List<EntityStatus>>(result);
+        }
+
+        public List<HistoryItem> GetHistoryList() {
+            var dic = new Dictionary<string, string>();
+            var result = HttpHelper.Get( this.urlHistoryList, dic, this.key );
+            if( string.IsNullOrEmpty( result ) ) {
+                return new List<HistoryItem>();
+            }
+            return JsonConvert.DeserializeObject<List<HistoryItem>>( result );
         }
         #endregion
     }

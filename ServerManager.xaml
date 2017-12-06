@@ -43,6 +43,9 @@
                 <TreeViewItem Header="目标人员列表" Selected="TreeViewItem_Selected_6"  Style="{StaticResource TreeViewItem}"/>
                 <TreeViewItem Header="目标人员添加"  Selected="TreeViewItem_Selected_7"  Style="{StaticResource TreeViewItem}"/>
             </TreeViewItem>
+            <TreeViewItem  Header="历史记录管理" IsExpanded="True" Name="TreeViewItem_History"  Style="{StaticResource TreeViewItem}">
+                <TreeViewItem Header="历史记录列表" Selected="TreeViewItem_Selected_9"  Style="{StaticResource TreeViewItem}"/>
+            </TreeViewItem>
         </TreeView>
 
         <Border  Grid.Row="0" Grid.Column="1" BorderThickness="0,1,0,1" BorderBrush="Gray">
@@ -394,6 +397,25 @@
                         </Button>
                     </WrapPanel>
                 </StackPanel>
+
+
+                <ListView x:Name="HistoryList" ItemsSource="{Binding}" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="HistoryList_MouseLeftButtonUp">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Height" Value="30" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Date}">
+                                    <GridViewColumnHeader Content="日期" Style="{StaticResource ListViewColumnHeader}"/>
+                                </GridViewColumn>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
 
             </StackPanel>
         </Border>

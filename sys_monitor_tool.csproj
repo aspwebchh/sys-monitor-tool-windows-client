@@ -78,6 +78,7 @@
     <Compile Include="Common.cs" />
     <Compile Include="DataSource.cs" />
     <Compile Include="entity\EntityBase.cs" />
+    <Compile Include="entity\HistoryItem.cs" />
     <Compile Include="entity\SmtpMailInfo.cs" />
     <Compile Include="entity\MySql.cs" />
     <Compile Include="entity\Process.cs" />
@@ -108,6 +109,7 @@
       <DependentUpon>ServerProperty.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIBase.cs" />
+    <Compile Include="UIHistory.cs" />
     <Compile Include="UIHttpUrl.cs" />
     <Compile Include="UIMySQL.cs" />
     <Compile Include="UIOverview.cs" />

@@ -29,6 +29,8 @@ namespace sys_monitor_tool {
             window.HttpUrl_Form.Visibility = Visibility.Collapsed;
             window.UserList.Visibility = Visibility.Collapsed;
             window.User_Form.Visibility = Visibility.Collapsed;
+            window.HistoryList.Visibility = Visibility.Collapsed;
+
         }
 
         protected void UpdateStatus(ListView listView, List<entity.EntityBase> data, UpdateStatusTaskType type, GetStatus getStatus) {
