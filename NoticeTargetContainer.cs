@@ -34,6 +34,10 @@ namespace sys_monitor_tool {
             }
         }
 
+        public void Refresh() {
+            this.Fill();
+        }
+
         public List<int> GetSelectedValues() {
             var result = new List<int>();
             foreach(var checkbox in dic.Keys) {

@@ -97,7 +97,8 @@ namespace sys_monitor_tool
 
             this.HideAllElement();
             window.HttpUrl_Form.Visibility = Visibility.Visible;
-            httpUrlNoticeTargetContainer.UnSelectAll();
+            httpUrlNoticeTargetContainer.Refresh();
+            //httpUrlNoticeTargetContainer.UnSelectAll();
         }
 
         public void DeleteItemHandle()
@@ -142,6 +143,7 @@ namespace sys_monitor_tool
             window.HttpUrl_Method.SelectedIndex = new string[] { "GET", "POST" }.ToList().IndexOf(item.Method.ToUpper());
             window.HttpUrl_Url.Text = item.Url;
 
+            httpUrlNoticeTargetContainer.Refresh();
             httpUrlNoticeTargetContainer.Select(item.NoticeTargetItems);
 
             TreeViewReset();

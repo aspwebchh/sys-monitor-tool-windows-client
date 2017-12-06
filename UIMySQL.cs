@@ -108,7 +108,8 @@ namespace sys_monitor_tool {
 
             this.HideAllElement();
             window.MySql_Form.Visibility = Visibility.Visible;
-            mySqlNoticeTargetContainer.UnSelectAll();
+            mySqlNoticeTargetContainer.Refresh();
+            //mySqlNoticeTargetContainer.UnSelectAll();
         }
 
         public void DeleteItemHandle() {
@@ -152,6 +153,7 @@ namespace sys_monitor_tool {
             window.MySql_Password.Text = item.Password;
             window.MySql_Database.Text = item.Database;
 
+            mySqlNoticeTargetContainer.Refresh();
             mySqlNoticeTargetContainer.Select(item.NoticeTargetItems);
 
             TreeViewReset();

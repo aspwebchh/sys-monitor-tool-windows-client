@@ -45,7 +45,7 @@ namespace sys_monitor_tool {
             timer.Enabled = true;
             timer.Interval = 10000;
             timer.Start();
-            timer.Elapsed += ( o, e ) => {
+            timer.Elapsed += delegate ( object sender, ElapsedEventArgs e ) {
                 action();
             };
 

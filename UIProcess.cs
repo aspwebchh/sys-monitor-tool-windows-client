@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 using System.Windows;
 using sys_monitor_tool.entity;
@@ -60,7 +59,8 @@ namespace sys_monitor_tool {
             window.Process_Name.Clear();
             this.HideAllElement();
             window.Process_Form.Visibility = Visibility.Visible;
-            processNoticeTargetContainer.UnSelectAll();
+            processNoticeTargetContainer.Refresh();
+            //processNoticeTargetContainer.UnSelectAll();
         }
 
         public void DeleteItemHandle() {
