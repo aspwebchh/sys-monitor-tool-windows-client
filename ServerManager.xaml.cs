@@ -202,8 +202,11 @@ namespace sys_monitor_tool
             this.uiHistory.InitHistoryList();
         }
 
-        private void HistoryList_MouseLeftButtonUp( object sender, MouseButtonEventArgs e ) {
 
+        private void HistoryList_MouseLeftButtonUp( object sender, MouseButtonEventArgs e ) {
+            var historyView = new HistoryView(dataSource, HistoryList.SelectedItem as HistoryItem);
+            historyView.Owner = this;
+            historyView.ShowDialog();
         }
     }
 }

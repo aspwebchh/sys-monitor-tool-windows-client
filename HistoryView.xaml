@@ -1,0 +1,56 @@
+﻿<Window x:Class="sys_monitor_tool.HistoryView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:sys_monitor_tool"
+        mc:Ignorable="d"
+        Title="历史记录查看" Height="500" Width="950" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary  Source="Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+
+        <ListView x:Name="HistoryList" ItemsSource="{Binding}" Grid.ColumnSpan="2"  Style="{StaticResource ListView}" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Height" Value="30" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="查看监控" Click="MenuItem_Click">
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=TimeString}">
+                            <GridViewColumnHeader Content="日期" Style="{StaticResource ListViewColumnHeader}"/>
+                        </GridViewColumn>
+
+                        <GridViewColumn>
+                            <GridViewColumnHeader Content="记录类型" Style="{StaticResource ListViewColumnHeader}"/>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock  Text="{Binding TypeDesc}" Foreground="{Binding TypeDescColor}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=MonitorTypeDesc}">
+                            <GridViewColumnHeader Content="监控类型" Style="{StaticResource ListViewColumnHeader}"/>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Message}">
+                            <GridViewColumnHeader Content="消息" Style="{StaticResource ListViewColumnHeader}"/>
+                        </GridViewColumn>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

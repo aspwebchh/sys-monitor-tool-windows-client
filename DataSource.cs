@@ -391,6 +391,29 @@ namespace sys_monitor_tool
             }
             return JsonConvert.DeserializeObject<List<HistoryItem>>( result );
         }
+
+        public List<HistoryDetailItem> GetHistoryDetail(HistoryItem historyItem) {
+            var historyContentUrl = this.baseUrl + "/history/" + historyItem.FileName;
+            var historyContent = HttpHelper.Get( historyContentUrl, new Dictionary<string, string>(), this.key );
+            var result = historyContent.Split( '\n' ).Select( item => item.Split( '|' ) ).Select( item => {
+                if( item.Length >= 4 ) {
+                    var historyInfo = new HistoryDetailItem();
+                    historyInfo.TimeString = item[ 0 ];
+                    historyInfo.Type = item[ 1 ];
+                    historyInfo.GlobalID = item[ 2 ];
+                    historyInfo.Message = item[ 3 ];
+                    return historyInfo;
+                } else {
+                    return null;
+                }
+            } ).Where( item => item != null ).ToList();
+
+            result.Sort( ( a, b ) => {
+                return (int)( b.Time - a.Time ).TotalMilliseconds;
+            } );
+            return result;
+        }
+
         #endregion
     }
 }
