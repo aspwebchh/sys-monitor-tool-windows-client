@@ -28,7 +28,7 @@ namespace sys_monitor_tool
                 return users.Find(item => item.ID == Convert.ToInt32(id));
             }).Where(item => item != null).Select(item => {
                 return item != null ? item.Name : "";
-            });
+            }).Distinct();
             return string.Join("，", names); 
         }
     }
