@@ -20,7 +20,7 @@ namespace sys_monitor_tool.entity
             {
                 return "";
             }
-            var regex = new Regex(@"(\w+):(\w+)@tcp\(([\w.]+):(\d+)\)\/(\w+)\?.+");
+            var regex = new Regex(@"(.+?):(.+?)@tcp\(([\w.]+):(\d+)\)\/(\w+)\?.+");
             var match = regex.Match(ConnectionString);
             if (match.Success)
             {
