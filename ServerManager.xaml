@@ -136,7 +136,7 @@
                     <ListView.View>
                         <GridView>
                             <GridView.Columns>
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" Width="130">
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" Width="200">
                                     <GridViewColumnHeader Content="名称" Style="{StaticResource ListViewColumnHeader}" />
                                 </GridViewColumn>
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=Host}" Width="150">
@@ -147,9 +147,6 @@
                                 </GridViewColumn>
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=User}"  Width="120">
                                     <GridViewColumnHeader Content="用户" Style="{StaticResource ListViewColumnHeader}"/>
-                                </GridViewColumn>
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Password}" Width="180">
-                                    <GridViewColumnHeader Content="密码" Style="{StaticResource ListViewColumnHeader}"/>
                                 </GridViewColumn>
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=Database}" Width="130">
                                     <GridViewColumnHeader Content="数据库" Style="{StaticResource ListViewColumnHeader}"/>
@@ -282,7 +279,7 @@
                     <ListView.View>
                         <GridView>
                             <GridView.Columns>
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" Width="150">
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" Width="200">
                                     <GridViewColumnHeader Content="名称" Style="{StaticResource ListViewColumnHeader}"/>
                                 </GridViewColumn>
 

@@ -50,8 +50,10 @@ namespace sys_monitor_tool
                         row ["StatusColor"] = "Red";
                     }
                 }
+                var dataView = serverData.DefaultView;
+                dataView.Sort = "Status desc";
                 Dispatcher.Invoke(() => {
-                    listView.DataContext = serverData;
+                    listView.DataContext = dataView.ToTable();
                 });
             });
         }

@@ -45,7 +45,7 @@ namespace sys_monitor_tool {
                     result.Add(dic [checkbox]);
                 }
             }
-            return result;
+            return result.Distinct().ToList();
         }
 
         public void Select( List<int> selectVals)

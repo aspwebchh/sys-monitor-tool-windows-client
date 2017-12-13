@@ -62,7 +62,7 @@
 
         <WrapPanel Grid.Row="6" Grid.Column="0" Style="{StaticResource ViewPageRow}">
             <TextBlock Text="状态：" Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
-            <TextBlock Name="Status" MaxWidth="400"></TextBlock>
+            <TextBox Name="Status" IsReadOnly="True" BorderThickness="0" MaxWidth="400"></TextBox>
         </WrapPanel>
         <WrapPanel Grid.Row="7" Grid.Column="0" Style="{StaticResource ViewPageRow}">
             <TextBlock Text="延时：" Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
