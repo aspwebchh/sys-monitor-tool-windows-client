@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:sys_monitor_tool"
         mc:Ignorable="d"
-        Title="服务器监控工具" WindowStartupLocation="CenterScreen" Width="600" Height="400">
+        Title="系统可用性监控工具" WindowStartupLocation="CenterScreen" Width="600" Height="400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>

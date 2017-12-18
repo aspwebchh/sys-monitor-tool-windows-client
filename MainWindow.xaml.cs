@@ -51,7 +51,9 @@ namespace sys_monitor_tool
                     }
                 }
                 var dataView = serverData.DefaultView;
-                dataView.Sort = "Status desc";
+                if( serverData.Rows.Count > 0 ) {
+                    dataView.Sort = "Status desc";
+                }
                 Dispatcher.Invoke(() => {
                     listView.DataContext = dataView.ToTable();
                 });
