@@ -6,6 +6,11 @@ using System.Text.RegularExpressions;
 
 namespace sys_monitor_tool.entity {
     public class HistoryDetailItem {
+        public string MonitorName {
+            get;set;
+        }
+
+
         public string Type {
             get; set;
         }

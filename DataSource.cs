@@ -392,6 +392,31 @@ namespace sys_monitor_tool
             return JsonConvert.DeserializeObject<List<HistoryItem>>( result );
         }
 
+
+        public string GetTargetName( MonitorType monitorType, int id ) {
+            switch( monitorType ) {
+                case MonitorType.Process:
+                    var process = this.GetProcessItem( id );
+                    if( process != null ) {
+                        return process.ProcessName;
+                    }
+                    break;
+                case MonitorType.MySql:
+                    var mysql = this.GetMySqlItem( id );
+                    if( mysql != null ) {
+                        return mysql.Description;
+                    }
+                    break;
+                case MonitorType.HttpUrl:
+                    var httpUrl = this.GetUrlItem( id );
+                    if( httpUrl != null ) {
+                        return httpUrl.Description;
+                    }
+                    break;
+            }
+            return "未知监控";
+        }
+
         public List<HistoryDetailItem> GetHistoryDetail(HistoryItem historyItem) {
             var historyContentUrl = this.baseUrl + "/history/" + historyItem.FileName;
             var historyContent = HttpHelper.Get( historyContentUrl, new Dictionary<string, string>(), this.key );
@@ -402,6 +427,7 @@ namespace sys_monitor_tool
                     historyInfo.Type = item[ 1 ];
                     historyInfo.GlobalID = item[ 2 ];
                     historyInfo.Message = item[ 3 ];
+                   // historyInfo.MonitorName = GetTargetName( historyInfo.MonitorType, historyInfo.ItemID ); 
                     return historyInfo;
                 } else {
                     return null;

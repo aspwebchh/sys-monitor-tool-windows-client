@@ -11,7 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Threading;
 using sys_monitor_tool.entity;
+
 
 namespace sys_monitor_tool {
     /// <summary>
@@ -24,6 +26,20 @@ namespace sys_monitor_tool {
             this.dataSource = dataSource;
             var result = dataSource.GetHistoryDetail( historyItem );
             HistoryList.DataContext = result;
+
+            new Thread( delegate () {
+                result = result.Select( item => {
+                    var targetName = dataSource.GetTargetName( item.MonitorType, item.ItemID );
+                    if( string.IsNullOrEmpty( targetName ) ) {
+                        targetName = "监控被删除";
+                    }
+                    item.MonitorName = targetName;
+                    return item; 
+                } ).ToList();
+                this.Dispatcher.Invoke( delegate () {
+                    HistoryList.DataContext = result;
+                } );
+            } ).Start();
         }
 
         private void MenuItem_Click( object sender, RoutedEventArgs e ) {

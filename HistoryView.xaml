@@ -30,11 +30,11 @@
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=TimeString}">
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=TimeString}"  Width="150">
                             <GridViewColumnHeader Content="日期" Style="{StaticResource ListViewColumnHeader}"/>
                         </GridViewColumn>
 
-                        <GridViewColumn>
+                        <GridViewColumn   Width="70">
                             <GridViewColumnHeader Content="记录类型" Style="{StaticResource ListViewColumnHeader}"/>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -42,8 +42,11 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=MonitorTypeDesc}">
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=MonitorTypeDesc}" Width="100">
                             <GridViewColumnHeader Content="监控类型" Style="{StaticResource ListViewColumnHeader}"/>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=MonitorName}" Width="200">
+                            <GridViewColumnHeader Content="监控名称" Style="{StaticResource ListViewColumnHeader}"/>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Message}">
                             <GridViewColumnHeader Content="消息" Style="{StaticResource ListViewColumnHeader}"/>
