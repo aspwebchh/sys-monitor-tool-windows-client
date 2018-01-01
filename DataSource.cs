@@ -393,23 +393,45 @@ namespace sys_monitor_tool
         }
 
 
+        private static Dictionary<int, Process> processInfo = new Dictionary<int, Process>();
+        private static Dictionary<int, MySql> mysqlInfo = new Dictionary<int, MySql>();
+        private static Dictionary<int, HttpUrl> httpUrlInfo = new Dictionary<int, HttpUrl>();
+
         public string GetTargetName( MonitorType monitorType, int id ) {
             switch( monitorType ) {
                 case MonitorType.Process:
-                    var process = this.GetProcessItem( id );
+                    Process process;
+                    if( processInfo.ContainsKey(id)) {
+                        process = processInfo [id];
+                    } else {
+                        process = this.GetProcessItem(id);
+                    }
                     if( process != null ) {
+                        processInfo [id] = process;
                         return process.ProcessName;
                     }
                     break;
                 case MonitorType.MySql:
-                    var mysql = this.GetMySqlItem( id );
+                    MySql mysql;
+                    if(mysqlInfo.ContainsKey(id)) {
+                        mysql = mysqlInfo [id];
+                    } else {
+                        mysql = this.GetMySqlItem(id);
+                    }
                     if( mysql != null ) {
+                        mysqlInfo [id] = mysql;
                         return mysql.Description;
                     }
                     break;
                 case MonitorType.HttpUrl:
-                    var httpUrl = this.GetUrlItem( id );
+                    HttpUrl httpUrl;
+                    if(httpUrlInfo.ContainsKey(id)) {
+                        httpUrl = httpUrlInfo [id];
+                    } else {
+                        httpUrl = this.GetUrlItem(id);
+                    }
                     if( httpUrl != null ) {
+                        httpUrlInfo [id] = httpUrl;
                         return httpUrl.Description;
                     }
                     break;
