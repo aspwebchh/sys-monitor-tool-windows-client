@@ -50,371 +50,373 @@
 
         <Border  Grid.Row="0" Grid.Column="1" BorderThickness="0,1,0,1" BorderBrush="Gray">
 
-            <StackPanel Name="ContentPanel" >
-                <Image gif:ImageBehavior.AnimatedSource="/loading.gif" Width="40" Height="40" Name="Loading" Margin="20,20,0,0" Visibility="Collapsed" HorizontalAlignment="Left"></Image>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                <StackPanel Name="ContentPanel" >
+                    <Image gif:ImageBehavior.AnimatedSource="/loading.gif" Width="40" Height="40" Name="Loading" Margin="20,20,0,0" Visibility="Collapsed" HorizontalAlignment="Left"></Image>
 
-                <StackPanel x:Name="Overview">
+                    <StackPanel x:Name="Overview">
 
-                    <GroupBox Padding="20" Margin="10" BorderBrush="#ccc">
-                        <GroupBox.Header>
-                            <Label Content="MySQL监控"/>
-                        </GroupBox.Header>
-                        <WrapPanel>
-                            <WrapPanel Width="150">
-                                <TextBlock Text="监控总数"></TextBlock>
-                                <TextBlock Text="" Margin="10,0,0,0" Name="MySQL_All"></TextBlock>
+                        <GroupBox Padding="20" Margin="10" BorderBrush="#ccc">
+                            <GroupBox.Header>
+                                <Label Content="MySQL监控"/>
+                            </GroupBox.Header>
+                            <WrapPanel>
+                                <WrapPanel Width="150">
+                                    <TextBlock Text="监控总数"></TextBlock>
+                                    <TextBlock Text="" Margin="10,0,0,0" Name="MySQL_All"></TextBlock>
+                                </WrapPanel>
+                                <WrapPanel  Width="150">
+                                    <TextBlock Text="正常个数"></TextBlock>
+                                    <TextBlock Text="" Margin="10,0,0,0" Name="MySQL_Normal"></TextBlock>
+                                </WrapPanel>
+                                <WrapPanel  Width="150">
+                                    <TextBlock Text="异常个数" Name="MySQL_Error_Title"></TextBlock>
+                                    <TextBlock Text="" Margin="10,0,0,0" Name="MySQL_Error"></TextBlock>
+                                </WrapPanel>
                             </WrapPanel>
-                            <WrapPanel  Width="150">
-                                <TextBlock Text="正常个数"></TextBlock>
-                                <TextBlock Text="" Margin="10,0,0,0" Name="MySQL_Normal"></TextBlock>
+                        </GroupBox>
+
+                        <GroupBox Padding="20" Margin="10" BorderBrush="#ccc">
+                            <GroupBox.Header>
+                                <Label Content="进程监控"/>
+                            </GroupBox.Header>
+                            <WrapPanel>
+                                <WrapPanel Width="150">
+                                    <TextBlock Text="监控总数"></TextBlock>
+                                    <TextBlock Text="" Margin="10,0,0,0" Name="Process_All"></TextBlock>
+                                </WrapPanel>
+                                <WrapPanel  Width="150">
+                                    <TextBlock Text="正常个数"></TextBlock>
+                                    <TextBlock Text="" Margin="10,0,0,0" Name="Process_Normal"></TextBlock>
+                                </WrapPanel>
+                                <WrapPanel  Width="150">
+                                    <TextBlock Text="异常个数" Name="Process_Error_Title"></TextBlock>
+                                    <TextBlock Text="" Margin="10,0,0,0" Name="Process_Error"></TextBlock>
+                                </WrapPanel>
                             </WrapPanel>
-                            <WrapPanel  Width="150">
-                                <TextBlock Text="异常个数" Name="MySQL_Error_Title"></TextBlock>
-                                <TextBlock Text="" Margin="10,0,0,0" Name="MySQL_Error"></TextBlock>
+                        </GroupBox>
+
+                        <GroupBox Padding="20" Margin="10" BorderBrush="#ccc">
+                            <GroupBox.Header>
+                                <Label Content="Url监控"/>
+                            </GroupBox.Header>
+                            <WrapPanel>
+                                <WrapPanel Width="150">
+                                    <TextBlock Text="监控总数"></TextBlock>
+                                    <TextBlock Text="" Margin="10,0,0,0" Name="Url_All"></TextBlock>
+                                </WrapPanel>
+                                <WrapPanel  Width="150">
+                                    <TextBlock Text="正常个数"></TextBlock>
+                                    <TextBlock Text="" Margin="10,0,0,0" Name="Url_Normal"></TextBlock>
+                                </WrapPanel>
+                                <WrapPanel  Width="150">
+                                    <TextBlock Text="异常个数" Name="Url_Error_Title"></TextBlock>
+                                    <TextBlock Text="" Margin="10,0,0,0" Name="Url_Error"></TextBlock>
+                                </WrapPanel>
+                            </WrapPanel>
+                        </GroupBox>
+                    </StackPanel>
+
+                    <ListView x:Name="MySqlList" ItemsSource="{Binding}" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="MySqlList_MouseLeftButtonUp">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Height" Value="30" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="修改" Click="Button_Click_1">
+                                </MenuItem>
+                                <MenuItem Header="删除" Click="Button_Click">
+                                </MenuItem>
+                                <MenuItem Header="复制连接字符串" Click="MenuItem_Click_1" >
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" Width="200">
+                                        <GridViewColumnHeader Content="名称" Style="{StaticResource ListViewColumnHeader}" />
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Host}" Width="150">
+                                        <GridViewColumnHeader Content="地址" Style="{StaticResource ListViewColumnHeader}"/>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Port}" Width="70" >
+                                        <GridViewColumnHeader Content="端口" Style="{StaticResource ListViewColumnHeader}"/>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=User}"  Width="120">
+                                        <GridViewColumnHeader Content="用户" Style="{StaticResource ListViewColumnHeader}"/>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Database}" Width="130">
+                                        <GridViewColumnHeader Content="数据库" Style="{StaticResource ListViewColumnHeader}"/>
+                                    </GridViewColumn>
+                                    <GridViewColumn  Width="80">
+                                        <GridViewColumnHeader Content="延时(ms)"  Style="{StaticResource ListViewColumnHeader}"/>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock  Text="{Binding Delay}" Foreground="{Binding StatusColor}"></TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn  Width="80">
+                                        <GridViewColumnHeader Content="状态" Style="{StaticResource ListViewColumnHeader}"/>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock  Text="{Binding Status}" Foreground="{Binding StatusColor}"></TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <StackPanel Name="MySql_Form" Visibility="Collapsed" Style="{StaticResource Form}">
+                        <WrapPanel Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">名称</TextBlock>
+                            <TextBox Style="{StaticResource FormTextBox}" Name="MySql_Name"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">主机</TextBlock>
+                            <TextBox Style="{StaticResource FormTextBox}" Name="MySql_Host"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel  Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">端口</TextBlock>
+                            <TextBox  Style="{StaticResource FormTextBox}" Name="MySql_Port"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel  Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">用户</TextBlock>
+                            <TextBox  Style="{StaticResource FormTextBox}" Name="MySql_User"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel  Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">密码</TextBlock>
+                            <TextBox  Style="{StaticResource FormTextBox}" Name="MySql_Password"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel  Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">数据库</TextBlock>
+                            <TextBox  Style="{StaticResource FormTextBox}" Name="MySql_Database"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel  Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">通知目标</TextBlock>
+                            <WrapPanel Name="MySqlNoticeTarget">
+
                             </WrapPanel>
                         </WrapPanel>
-                    </GroupBox>
+                        <WrapPanel  Style="{StaticResource FormRow}">
+                            <Button Name="MySql_Save_Btn" Style="{StaticResource SubmitBtn}">
+                                <TextBlock>保存</TextBlock>
+                            </Button>
+                        </WrapPanel>
+                    </StackPanel>
 
-                    <GroupBox Padding="20" Margin="10" BorderBrush="#ccc">
-                        <GroupBox.Header>
-                            <Label Content="进程监控"/>
-                        </GroupBox.Header>
-                        <WrapPanel>
-                            <WrapPanel Width="150">
-                                <TextBlock Text="监控总数"></TextBlock>
-                                <TextBlock Text="" Margin="10,0,0,0" Name="Process_All"></TextBlock>
-                            </WrapPanel>
-                            <WrapPanel  Width="150">
-                                <TextBlock Text="正常个数"></TextBlock>
-                                <TextBlock Text="" Margin="10,0,0,0" Name="Process_Normal"></TextBlock>
-                            </WrapPanel>
-                            <WrapPanel  Width="150">
-                                <TextBlock Text="异常个数" Name="Process_Error_Title"></TextBlock>
-                                <TextBlock Text="" Margin="10,0,0,0" Name="Process_Error"></TextBlock>
+
+                    <ListView x:Name="ProcessList" ItemsSource="{Binding}" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="ProcessList_MouseLeftButtonUp">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Height" Value="30" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="删除" Click="Button_Click_2">
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProcessName}" Width="250">
+                                        <GridViewColumnHeader Content="名称" Style="{StaticResource ListViewColumnHeader}"/>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="80">
+                                        <GridViewColumnHeader Content="状态" Style="{StaticResource ListViewColumnHeader}"/>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock  Text="{Binding Status}" Foreground="{Binding StatusColor}"></TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <StackPanel Name="Process_Form" Visibility="Collapsed" Style="{StaticResource Form}">
+                        <WrapPanel Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">名称</TextBlock>
+                            <TextBox Style="{StaticResource FormTextBox}" Name="Process_Name"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel  Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">通知目标</TextBlock>
+                            <WrapPanel Name="ProcessNoticeTarget">
+
                             </WrapPanel>
                         </WrapPanel>
-                    </GroupBox>
+                        <WrapPanel  Style="{StaticResource FormRow}">
+                            <Button Name="Procress_Save_Btn" Style="{StaticResource SubmitBtn}">
+                                <TextBlock>保存</TextBlock>
+                            </Button>
+                        </WrapPanel>
+                    </StackPanel>
 
-                    <GroupBox Padding="20" Margin="10" BorderBrush="#ccc">
-                        <GroupBox.Header>
-                            <Label Content="Url监控"/>
-                        </GroupBox.Header>
-                        <WrapPanel>
-                            <WrapPanel Width="150">
-                                <TextBlock Text="监控总数"></TextBlock>
-                                <TextBlock Text="" Margin="10,0,0,0" Name="Url_All"></TextBlock>
-                            </WrapPanel>
-                            <WrapPanel  Width="150">
-                                <TextBlock Text="正常个数"></TextBlock>
-                                <TextBlock Text="" Margin="10,0,0,0" Name="Url_Normal"></TextBlock>
-                            </WrapPanel>
-                            <WrapPanel  Width="150">
-                                <TextBlock Text="异常个数" Name="Url_Error_Title"></TextBlock>
-                                <TextBlock Text="" Margin="10,0,0,0" Name="Url_Error"></TextBlock>
+                    <ListView x:Name="HttpUrlList" ItemsSource="{Binding}" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="HttpUrlList_SelectionChanged">
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="打开链接" Click="MenuItem_Click">
+                                </MenuItem>
+                                <MenuItem Header="修改" Click="Button_Click_4">
+                                </MenuItem>
+                                <MenuItem Header="删除" Click="Button_Click_3">
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Height" Value="30" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" Width="200">
+                                        <GridViewColumnHeader Content="名称" Style="{StaticResource ListViewColumnHeader}"/>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Method}" Width="80">
+                                        <GridViewColumnHeader Content="方法" Style="{StaticResource ListViewColumnHeader}"/>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Url}" Width="500">
+                                        <GridViewColumnHeader Content="URL"  Style="{StaticResource ListViewColumnHeader}"/>
+                                    </GridViewColumn>
+                                    <GridViewColumn  Width="80">
+                                        <GridViewColumnHeader Content="延时(ms)"  Style="{StaticResource ListViewColumnHeader}"/>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock  Text="{Binding Delay}" Foreground="{Binding StatusColor}"></TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn  Width="80">
+                                        <GridViewColumnHeader Content="状态" Style="{StaticResource ListViewColumnHeader}"/>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock  Text="{Binding Status}" Foreground="{Binding StatusColor}"></TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+
+                    <StackPanel Name="HttpUrl_Form" Visibility="Collapsed" Style="{StaticResource Form}">
+                        <WrapPanel Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">名称</TextBlock>
+                            <TextBox Style="{StaticResource FormTextBox}" Name="HttpUrl_Name"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">方法</TextBlock>
+                            <ComboBox  Name="HttpUrl_Method">
+                                <ComboBoxItem>GET</ComboBoxItem>
+                                <ComboBoxItem>POST</ComboBoxItem>
+                            </ComboBox>
+                        </WrapPanel>
+                        <WrapPanel Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">URL</TextBlock>
+                            <TextBox Style="{StaticResource FormTextBox}" Name="HttpUrl_Url" Width="500"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel  Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">通知目标</TextBlock>
+                            <WrapPanel Name="HttpUrlNoticeTarget">
                             </WrapPanel>
                         </WrapPanel>
-                    </GroupBox>
+                        <WrapPanel  Style="{StaticResource FormRow}">
+                            <Button Name="HttpUrl_Save_Btn" Style="{StaticResource SubmitBtn}">
+                                <TextBlock>保存</TextBlock>
+                            </Button>
+                        </WrapPanel>
+                    </StackPanel>
+
+                    <ListView x:Name="UserList" ItemsSource="{Binding}" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Height" Value="30" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="修改" Click="Button_Click_5">
+                                </MenuItem>
+                                <MenuItem Header="删除" Click="Button_Click_6">
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="100">
+                                        <GridViewColumnHeader Content="姓名" Style="{StaticResource ListViewColumnHeader}"/>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Mobile}" Width="150">
+                                        <GridViewColumnHeader Content="手机" Style="{StaticResource ListViewColumnHeader}"/>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Email}" Width="300">
+                                        <GridViewColumnHeader Content="邮箱" Style="{StaticResource ListViewColumnHeader}"/>
+                                    </GridViewColumn>
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+
+                    <StackPanel Name="User_Form" Visibility="Collapsed" Style="{StaticResource Form}">
+                        <WrapPanel Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">姓名</TextBlock>
+                            <TextBox Style="{StaticResource FormTextBox}" Name="User_Name"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">手机</TextBlock>
+                            <TextBox Style="{StaticResource FormTextBox}" Name="User_Mobile"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Style="{StaticResource FormRow}">
+                            <TextBlock Style="{StaticResource FormText}">邮箱</TextBlock>
+                            <TextBox Style="{StaticResource FormTextBox}" Name="User_Mail" Width="300"></TextBox>
+                        </WrapPanel>
+
+                        <WrapPanel  Style="{StaticResource FormRow}">
+                            <Button Name="User_Save_Btn" Style="{StaticResource SubmitBtn}">
+                                <TextBlock>保存</TextBlock>
+                            </Button>
+                        </WrapPanel>
+                    </StackPanel>
+
+
+                    <ListView x:Name="HistoryList" ItemsSource="{Binding}" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="HistoryList_MouseLeftButtonUp">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Height" Value="30" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Date}">
+                                        <GridViewColumnHeader Content="日期" Style="{StaticResource ListViewColumnHeader}"/>
+                                    </GridViewColumn>
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
                 </StackPanel>
-             
-                <ListView x:Name="MySqlList" ItemsSource="{Binding}" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="MySqlList_MouseLeftButtonUp">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Height" Value="30" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-
-                    <ListView.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="修改" Click="Button_Click_1">
-                            </MenuItem>
-                            <MenuItem Header="删除" Click="Button_Click">
-                            </MenuItem>
-                            <MenuItem Header="复制连接字符串" Click="MenuItem_Click_1" >
-                            </MenuItem>
-                        </ContextMenu>
-                    </ListView.ContextMenu>
-                    <ListView.View>
-                        <GridView>
-                            <GridView.Columns>
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" Width="200">
-                                    <GridViewColumnHeader Content="名称" Style="{StaticResource ListViewColumnHeader}" />
-                                </GridViewColumn>
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Host}" Width="150">
-                                    <GridViewColumnHeader Content="地址" Style="{StaticResource ListViewColumnHeader}"/>
-                                </GridViewColumn>
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Port}" Width="70" >
-                                    <GridViewColumnHeader Content="端口" Style="{StaticResource ListViewColumnHeader}"/>
-                                </GridViewColumn>
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=User}"  Width="120">
-                                    <GridViewColumnHeader Content="用户" Style="{StaticResource ListViewColumnHeader}"/>
-                                </GridViewColumn>
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Database}" Width="130">
-                                    <GridViewColumnHeader Content="数据库" Style="{StaticResource ListViewColumnHeader}"/>
-                                </GridViewColumn>
-                                <GridViewColumn  Width="80">
-                                    <GridViewColumnHeader Content="延时(ms)"  Style="{StaticResource ListViewColumnHeader}"/>
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock  Text="{Binding Delay}" Foreground="{Binding StatusColor}"></TextBlock>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn  Width="80">
-                                    <GridViewColumnHeader Content="状态" Style="{StaticResource ListViewColumnHeader}"/>
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock  Text="{Binding Status}" Foreground="{Binding StatusColor}"></TextBlock>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView.Columns>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-
-                <StackPanel Name="MySql_Form" Visibility="Collapsed" Style="{StaticResource Form}">
-                    <WrapPanel Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">名称</TextBlock>
-                        <TextBox Style="{StaticResource FormTextBox}" Name="MySql_Name"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">主机</TextBlock>
-                        <TextBox Style="{StaticResource FormTextBox}" Name="MySql_Host"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel  Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">端口</TextBlock>
-                        <TextBox  Style="{StaticResource FormTextBox}" Name="MySql_Port"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel  Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">用户</TextBlock>
-                        <TextBox  Style="{StaticResource FormTextBox}" Name="MySql_User"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel  Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">密码</TextBlock>
-                        <TextBox  Style="{StaticResource FormTextBox}" Name="MySql_Password"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel  Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">数据库</TextBlock>
-                        <TextBox  Style="{StaticResource FormTextBox}" Name="MySql_Database"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel  Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">通知目标</TextBlock>
-                        <WrapPanel Name="MySqlNoticeTarget">
-
-                        </WrapPanel>
-                    </WrapPanel>
-                    <WrapPanel  Style="{StaticResource FormRow}">
-                        <Button Name="MySql_Save_Btn" Style="{StaticResource SubmitBtn}">
-                            <TextBlock>保存</TextBlock>
-                        </Button>
-                    </WrapPanel>
-                </StackPanel>
-
-
-                <ListView x:Name="ProcessList" ItemsSource="{Binding}" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="ProcessList_MouseLeftButtonUp">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Height" Value="30" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="删除" Click="Button_Click_2">
-                            </MenuItem>
-                        </ContextMenu>
-                    </ListView.ContextMenu>
-                    <ListView.View>
-                        <GridView>
-                            <GridView.Columns>
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=ProcessName}" Width="250">
-                                    <GridViewColumnHeader Content="名称" Style="{StaticResource ListViewColumnHeader}"/>
-                                </GridViewColumn>
-                                <GridViewColumn Width="80">
-                                    <GridViewColumnHeader Content="状态" Style="{StaticResource ListViewColumnHeader}"/>
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock  Text="{Binding Status}" Foreground="{Binding StatusColor}"></TextBlock>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView.Columns>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-
-                <StackPanel Name="Process_Form" Visibility="Collapsed" Style="{StaticResource Form}">
-                    <WrapPanel Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">名称</TextBlock>
-                        <TextBox Style="{StaticResource FormTextBox}" Name="Process_Name"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel  Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">通知目标</TextBlock>
-                        <WrapPanel Name="ProcessNoticeTarget">
-
-                        </WrapPanel>
-                    </WrapPanel>
-                    <WrapPanel  Style="{StaticResource FormRow}">
-                        <Button Name="Procress_Save_Btn" Style="{StaticResource SubmitBtn}">
-                            <TextBlock>保存</TextBlock>
-                        </Button>
-                    </WrapPanel>
-                </StackPanel>
-
-                <ListView x:Name="HttpUrlList" ItemsSource="{Binding}" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="HttpUrlList_SelectionChanged">
-                    <ListView.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="打开链接" Click="MenuItem_Click">
-                            </MenuItem>
-                            <MenuItem Header="修改" Click="Button_Click_4">
-                            </MenuItem>
-                            <MenuItem Header="删除" Click="Button_Click_3">
-                            </MenuItem>
-                        </ContextMenu>
-                    </ListView.ContextMenu>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Height" Value="30" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.View>
-                        <GridView>
-                            <GridView.Columns>
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" Width="200">
-                                    <GridViewColumnHeader Content="名称" Style="{StaticResource ListViewColumnHeader}"/>
-                                </GridViewColumn>
-
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Method}" Width="80">
-                                    <GridViewColumnHeader Content="方法" Style="{StaticResource ListViewColumnHeader}"/>
-                                </GridViewColumn>
-
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Url}" Width="500">
-                                    <GridViewColumnHeader Content="URL"  Style="{StaticResource ListViewColumnHeader}"/>
-                                </GridViewColumn>
-                                <GridViewColumn  Width="80">
-                                    <GridViewColumnHeader Content="延时(ms)"  Style="{StaticResource ListViewColumnHeader}"/>
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock  Text="{Binding Delay}" Foreground="{Binding StatusColor}"></TextBlock>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn  Width="80">
-                                    <GridViewColumnHeader Content="状态" Style="{StaticResource ListViewColumnHeader}"/>
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock  Text="{Binding Status}" Foreground="{Binding StatusColor}"></TextBlock>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView.Columns>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-
-
-                <StackPanel Name="HttpUrl_Form" Visibility="Collapsed" Style="{StaticResource Form}">
-                    <WrapPanel Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">名称</TextBlock>
-                        <TextBox Style="{StaticResource FormTextBox}" Name="HttpUrl_Name"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">方法</TextBlock>
-                        <ComboBox  Name="HttpUrl_Method">
-                            <ComboBoxItem>GET</ComboBoxItem>
-                            <ComboBoxItem>POST</ComboBoxItem>
-                        </ComboBox>
-                    </WrapPanel>
-                    <WrapPanel Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">URL</TextBlock>
-                        <TextBox Style="{StaticResource FormTextBox}" Name="HttpUrl_Url" Width="500"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel  Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">通知目标</TextBlock>
-                        <WrapPanel Name="HttpUrlNoticeTarget">
-                        </WrapPanel>
-                    </WrapPanel>
-                    <WrapPanel  Style="{StaticResource FormRow}">
-                        <Button Name="HttpUrl_Save_Btn" Style="{StaticResource SubmitBtn}">
-                            <TextBlock>保存</TextBlock>
-                        </Button>
-                    </WrapPanel>
-                </StackPanel>
-
-                <ListView x:Name="UserList" ItemsSource="{Binding}" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Height" Value="30" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="修改" Click="Button_Click_5">
-                            </MenuItem>
-                            <MenuItem Header="删除" Click="Button_Click_6">
-                            </MenuItem>
-                        </ContextMenu>
-                    </ListView.ContextMenu>
-                    <ListView.View>
-                        <GridView>
-                            <GridView.Columns>
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="100">
-                                    <GridViewColumnHeader Content="姓名" Style="{StaticResource ListViewColumnHeader}"/>
-                                </GridViewColumn>
-
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Mobile}" Width="150">
-                                    <GridViewColumnHeader Content="手机" Style="{StaticResource ListViewColumnHeader}"/>
-                                </GridViewColumn>
-
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Email}" Width="300">
-                                    <GridViewColumnHeader Content="邮箱" Style="{StaticResource ListViewColumnHeader}"/>
-                                </GridViewColumn>
-                            </GridView.Columns>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-
-
-                <StackPanel Name="User_Form" Visibility="Collapsed" Style="{StaticResource Form}">
-                    <WrapPanel Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">姓名</TextBlock>
-                        <TextBox Style="{StaticResource FormTextBox}" Name="User_Name"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">手机</TextBlock>
-                        <TextBox Style="{StaticResource FormTextBox}" Name="User_Mobile"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel Style="{StaticResource FormRow}">
-                        <TextBlock Style="{StaticResource FormText}">邮箱</TextBlock>
-                        <TextBox Style="{StaticResource FormTextBox}" Name="User_Mail" Width="300"></TextBox>
-                    </WrapPanel>
-
-                    <WrapPanel  Style="{StaticResource FormRow}">
-                        <Button Name="User_Save_Btn" Style="{StaticResource SubmitBtn}">
-                            <TextBlock>保存</TextBlock>
-                        </Button>
-                    </WrapPanel>
-                </StackPanel>
-
-
-                <ListView x:Name="HistoryList" ItemsSource="{Binding}" Grid.ColumnSpan="2" Visibility="Collapsed"  Style="{StaticResource ListView}" MouseLeftButtonUp="HistoryList_MouseLeftButtonUp">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Height" Value="30" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    
-                    <ListView.View>
-                        <GridView>
-                            <GridView.Columns>
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Date}">
-                                    <GridViewColumnHeader Content="日期" Style="{StaticResource ListViewColumnHeader}"/>
-                                </GridViewColumn>
-                            </GridView.Columns>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-
-            </StackPanel>
+            </ScrollViewer>
         </Border>
     </Grid>
 </Window>
