@@ -20,6 +20,10 @@
             <Setter Property="Width" Value="180"></Setter>
             <Setter Property="Padding" Value="4,2"></Setter>
         </Style>
+        <Style x:Key="PasswordField" TargetType="{x:Type PasswordBox}">
+            <Setter Property="Width" Value="180"></Setter>
+            <Setter Property="Padding" Value="4,2"></Setter>
+        </Style>
     </Window.Resources>
 
 
@@ -69,7 +73,7 @@
                     </WrapPanel>
                     <WrapPanel  Style="{StaticResource Row}">
                         <TextBlock Style="{StaticResource TitleField}"  Text="邮箱密码"></TextBlock>
-                        <TextBox  Style="{StaticResource ValueField }" Name="Password"></TextBox>
+                        <PasswordBox Style="{StaticResource PasswordField }" Name="Password"></PasswordBox>
                     </WrapPanel>
                     <WrapPanel  Style="{StaticResource Row}">
                         <TextBlock Style="{StaticResource TitleField}" Text="发件服务器"></TextBlock>

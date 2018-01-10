@@ -70,7 +70,7 @@ namespace sys_monitor_tool {
             }
             Dispatcher.Invoke( delegate () {
                 Mail.Text = mailInfo.Email;
-                Password.Text = mailInfo.Password;
+                Password.Password = mailInfo.Password;
                 SmtpServer.Text = mailInfo.SmtpServer;
                 if( mailInfo.SmtpPServerPort > 0 ) {
                     SmtpServerPort.Text = mailInfo.SmtpPServerPort.ToString();
@@ -81,7 +81,7 @@ namespace sys_monitor_tool {
 
         private bool handleMailTab(  bool isClose ) {
             var mail = Mail.Text.Trim();
-            var password = Password.Text.Trim();
+            var password = Password.Password.Trim();
             var smtpServer = SmtpServer.Text.Trim();
             var port = SmtpServerPort.Text.Trim();
             var ssl = SSL.IsChecked.Value ? 1 : 0;
