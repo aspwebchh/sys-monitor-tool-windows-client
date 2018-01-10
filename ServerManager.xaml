@@ -132,6 +132,8 @@
                                 </MenuItem>
                                 <MenuItem Header="复制连接字符串" Click="MenuItem_Click_1" >
                                 </MenuItem>
+                                <MenuItem Header="关闭通知" Click="MenuItem_Click_4"></MenuItem>
+                                <MenuItem Header="打开通知" Click="MenuItem_Click_5"></MenuItem>
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.View>
@@ -167,6 +169,9 @@
                                                 <TextBlock  Text="{Binding Status}" Foreground="{Binding StatusColor}"></TextBlock>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=DisableNoticeDesc}">
+                                        <GridViewColumnHeader Content="是否通知" Style="{StaticResource ListViewColumnHeader}"/>
                                     </GridViewColumn>
                                 </GridView.Columns>
                             </GridView>
@@ -222,6 +227,8 @@
                             <ContextMenu>
                                 <MenuItem Header="删除" Click="Button_Click_2">
                                 </MenuItem>
+                                <MenuItem Header="关闭通知" Click="MenuItem_Click_2"></MenuItem>
+                                <MenuItem Header="打开通知" Click="MenuItem_Click_3"></MenuItem>
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.View>
@@ -237,6 +244,9 @@
                                                 <TextBlock  Text="{Binding Status}" Foreground="{Binding StatusColor}"></TextBlock>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=DisableNoticeDesc}">
+                                        <GridViewColumnHeader Content="是否通知" Style="{StaticResource ListViewColumnHeader}"/>
                                     </GridViewColumn>
                                 </GridView.Columns>
                             </GridView>
@@ -270,6 +280,8 @@
                                 </MenuItem>
                                 <MenuItem Header="删除" Click="Button_Click_3">
                                 </MenuItem>
+                                <MenuItem Header="关闭通知" Click="MenuItem_Click_6"></MenuItem>
+                                <MenuItem Header="打开通知" Click="MenuItem_Click_7"></MenuItem>
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.ItemContainerStyle>
@@ -306,6 +318,9 @@
                                                 <TextBlock  Text="{Binding Status}" Foreground="{Binding StatusColor}"></TextBlock>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=DisableNoticeDesc}">
+                                        <GridViewColumnHeader Content="是否通知" Style="{StaticResource ListViewColumnHeader}"/>
                                     </GridViewColumn>
                                 </GridView.Columns>
                             </GridView>

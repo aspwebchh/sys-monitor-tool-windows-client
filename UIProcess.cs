@@ -80,6 +80,19 @@ namespace sys_monitor_tool {
             }
         }
 
+        public void DisableNotice( bool status ) {
+            var selectItem = window.ProcessList.SelectedItem as Process;
+            if( selectItem == null ) {
+                return;
+            }
+            var result = dataSource.DisableProcessNotice( selectItem.ID, status );
+            if( result.Code == ServerResult<object>.CODE_SUCCESS ) {
+                this.InitProcessList();
+            } else {
+                MsgBox.Alert( result.Message );
+            }
+        }
+
         private void TreeViewReset() {
             window.TreeViewItem_Process.IsSelected = true;
         }

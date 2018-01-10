@@ -208,5 +208,29 @@ namespace sys_monitor_tool
             historyView.Owner = this;
             historyView.ShowDialog();
         }
+
+        private void MenuItem_Click_2( object sender, RoutedEventArgs e ) {
+            this.uiProcess.DisableNotice( true );
+        }
+
+        private void MenuItem_Click_3( object sender, RoutedEventArgs e ) {
+            this.uiProcess.DisableNotice( false );
+        }
+
+        private void MenuItem_Click_4( object sender, RoutedEventArgs e ) {
+            this.uiMySql.DisableNotice( true );
+        }
+
+        private void MenuItem_Click_5( object sender, RoutedEventArgs e ) {
+            this.uiMySql.DisableNotice( false );
+        }
+
+        private void MenuItem_Click_6( object sender, RoutedEventArgs e ) {
+            this.uiHttpUrl.DisableNotice( true );
+        }
+
+        private void MenuItem_Click_7( object sender, RoutedEventArgs e ) {
+            this.uiHttpUrl.DisableNotice( false );
+        }
     }
 }

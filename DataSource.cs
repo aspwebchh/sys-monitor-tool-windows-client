@@ -25,6 +25,7 @@ namespace sys_monitor_tool
         private readonly string deleteMySqlUrl;
         private readonly string mySqlItemUrl;
         private readonly string mySqlStatusUrl;
+        private readonly string mysqlUpdateNoticeStatus;
 
         private readonly string processListUrl;
         private readonly string addProcessUrl;
@@ -32,6 +33,7 @@ namespace sys_monitor_tool
         private readonly string deleteProcessUrl;
         private readonly string processItemUrl;
         private readonly string processStatusUrl;
+        private readonly string processUpdateNoticeStatus;
 
         private readonly string urlListUrl;
         private readonly string addUrlUrl;
@@ -39,6 +41,7 @@ namespace sys_monitor_tool
         private readonly string deleteUrlUrl;
         private readonly string urlItemUrl;
         private readonly string urlStatusUrl;
+        private readonly string urlUpdateNoticeStatus;
 
         private readonly string urlGetMailInfo;
         private readonly string urlChangeMailInfo;
@@ -65,6 +68,8 @@ namespace sys_monitor_tool
             this.deleteMySqlUrl = baseUrl + "/mysql_remove";
             this.mySqlItemUrl = baseUrl + "/mysql_item";
             this.mySqlStatusUrl = baseUrl + "/mysql_status";
+            this.mysqlUpdateNoticeStatus = baseUrl + "/mysql_update_notice_status";
+            
 
             this.processListUrl = baseUrl + "/process_list";
             this.addProcessUrl = baseUrl + "/process_add";
@@ -72,6 +77,7 @@ namespace sys_monitor_tool
             this.deleteProcessUrl = baseUrl + "/process_remove";
             this.processItemUrl = baseUrl + "/process_item";
             this.processStatusUrl = baseUrl + "/process_status";
+            this.processUpdateNoticeStatus = baseUrl + "/process_update_notice_status";
 
             this.urlListUrl = baseUrl + "/url_list";
             this.addUrlUrl = baseUrl + "/url_add";
@@ -79,6 +85,7 @@ namespace sys_monitor_tool
             this.deleteUrlUrl = baseUrl + "/url_remove";
             this.urlItemUrl = baseUrl + "/url_item";
             this.urlStatusUrl = baseUrl + "/url_status";
+            this.urlUpdateNoticeStatus = baseUrl + "/url_update_notice_status";
 
             this.urlGetMailInfo = baseUrl + "/get_mail_info";
             this.urlChangeMailInfo = baseUrl + "/change_mail_info";
@@ -251,6 +258,15 @@ namespace sys_monitor_tool
             return JsonConvert.DeserializeObject<List<EntityStatus>>(result);
         }
 
+        public ServerResult<object> DisableMySqlNotice( int id, bool status ) {
+            var dic = new Dictionary<string, string>();
+            dic.Add( "id", id.ToString() );
+            dic.Add( "status", status ? "1" : "0" );
+            var result = HttpHelper.Get( this.mysqlUpdateNoticeStatus, dic, this.key );
+            var serverResult = JsonConvert.DeserializeObject<ServerResult<Object>>( result );
+            return CheckResult( serverResult );
+        }
+
 
         #endregion
 
@@ -307,6 +323,14 @@ namespace sys_monitor_tool
             return JsonConvert.DeserializeObject<List<EntityStatus>>(result);
         }
 
+        public ServerResult<object> DisableProcessNotice( int id, bool status ) {
+            var dic = new Dictionary<string, string>();
+            dic.Add( "id", id.ToString() );
+            dic.Add( "status", status ? "1" : "0" );
+            var result = HttpHelper.Get( this.processUpdateNoticeStatus, dic, this.key );
+            var serverResult = JsonConvert.DeserializeObject<ServerResult<Object>>( result );
+            return CheckResult( serverResult );
+        }
 
         #endregion
 
@@ -373,7 +397,6 @@ namespace sys_monitor_tool
             return rt;
         }
 
-
         public List<EntityStatus> GetUrlStatus() {
             var dic = new Dictionary<string, string>();
             var result = HttpHelper.Get(this.urlStatusUrl, dic, this.key );
@@ -382,6 +405,16 @@ namespace sys_monitor_tool
             }
             return JsonConvert.DeserializeObject<List<EntityStatus>>(result);
         }
+
+        public ServerResult<object> DisableUrlNotice( int id, bool status ) {
+            var dic = new Dictionary<string, string>();
+            dic.Add( "id", id.ToString() );
+            dic.Add( "status", status ? "1" : "0" );
+            var result = HttpHelper.Get( this.urlUpdateNoticeStatus, dic, this.key );
+            var serverResult = JsonConvert.DeserializeObject<ServerResult<Object>>( result );
+            return CheckResult( serverResult );
+        }
+
 
         public List<HistoryItem> GetHistoryList() {
             var dic = new Dictionary<string, string>();

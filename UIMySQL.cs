@@ -159,6 +159,19 @@ namespace sys_monitor_tool {
             TreeViewReset();
         }
 
+        public void DisableNotice( bool status ) {
+            var selectItem = window.MySqlList.SelectedItem as MySql;
+            if( selectItem == null ) {
+                return;
+            }
+            var result = dataSource.DisableMySqlNotice( selectItem.ID, status );
+            if( result.Code == ServerResult<object>.CODE_SUCCESS ) {
+                this.InitMySqlList();
+            } else {
+                MsgBox.Alert( result.Message );
+            }
+        }
+
         private void TreeViewReset()
         {
             window.TreeViewItem_MySql.IsSelected = true;

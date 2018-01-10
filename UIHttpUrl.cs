@@ -149,6 +149,19 @@ namespace sys_monitor_tool
             TreeViewReset();
         }
 
+        public void DisableNotice( bool status ) {
+            var selectItem = window.HttpUrlList.SelectedItem as HttpUrl;
+            if( selectItem == null ) {
+                return;
+            }
+            var result = dataSource.DisableUrlNotice( selectItem.ID, status );
+            if( result.Code == ServerResult<object>.CODE_SUCCESS ) {
+                this.InitHttpUrlList();
+            } else {
+                MsgBox.Alert( result.Message );
+            }
+        }
+
         private void TreeViewReset()
         {
             window.TreeViewItem_HttpUrl.IsSelected = true;

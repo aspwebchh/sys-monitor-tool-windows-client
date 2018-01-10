@@ -19,7 +19,33 @@ namespace sys_monitor_tool.entity {
             set;
         }
 
-
         public string StatusColor { get; set; }
+
+
+        public string DisableNotice {
+            get;set;
+        }
+
+        public bool IsDisableNotice {
+            get {
+                if( string.IsNullOrEmpty( DisableNotice ) ) {
+                    return false;
+                } else if( DisableNotice == "1" ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } 
+        }
+
+        public string DisableNoticeDesc {
+            get {
+                if( !IsDisableNotice ) {
+                    return "是";
+                } else {
+                    return "否";
+                }
+            }
+        }
     }
 }
