@@ -170,8 +170,13 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn DisplayMemberBinding="{Binding Path=DisableNoticeDesc}">
+                                    <GridViewColumn>
                                         <GridViewColumnHeader Content="是否通知" Style="{StaticResource ListViewColumnHeader}"/>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock  Text="{Binding DisableNoticeDesc}" Foreground="{Binding DisableNoticeDescColor}"></TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                 </GridView.Columns>
                             </GridView>
@@ -245,8 +250,13 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn DisplayMemberBinding="{Binding Path=DisableNoticeDesc}">
+                                    <GridViewColumn>
                                         <GridViewColumnHeader Content="是否通知" Style="{StaticResource ListViewColumnHeader}"/>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock  Text="{Binding DisableNoticeDesc}" Foreground="{Binding DisableNoticeDescColor}"></TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                 </GridView.Columns>
                             </GridView>
@@ -319,8 +329,13 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn DisplayMemberBinding="{Binding Path=DisableNoticeDesc}">
+                                    <GridViewColumn>
                                         <GridViewColumnHeader Content="是否通知" Style="{StaticResource ListViewColumnHeader}"/>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock  Text="{Binding DisableNoticeDesc}" Foreground="{Binding DisableNoticeDescColor}"></TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                 </GridView.Columns>
                             </GridView>

@@ -38,6 +38,16 @@ namespace sys_monitor_tool.entity {
             } 
         }
 
+        public string DisableNoticeDescColor {
+            get {
+                if( IsDisableNotice ) {
+                    return "Red";
+                } else {
+                    return Common.DEFAULT_TEXT_COLOR;
+                }
+            }
+        }
+
         public string DisableNoticeDesc {
             get {
                 if( !IsDisableNotice ) {
