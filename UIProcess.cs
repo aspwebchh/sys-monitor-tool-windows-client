@@ -46,6 +46,7 @@ namespace sys_monitor_tool {
             new Thread(() => {
                 var data = dataSource.GetProcessList();
                 window.Dispatcher.Invoke(() => {
+                    SetListViewHeight( window.ProcessList );
                     window.ProcessList.DataContext = data;
                     window.ProcessList.Visibility = Visibility.Visible;
                     HideLoading();
