@@ -52,7 +52,8 @@
 
             <ScrollViewer HorizontalScrollBarVisibility="Auto">
                 <StackPanel Name="ContentPanel" >
-                    <Image gif:ImageBehavior.AnimatedSource="/loading.gif" Width="40" Height="40" Name="Loading" Margin="20,20,0,0" Visibility="Collapsed" HorizontalAlignment="Left"></Image>
+                    <TextBlock Text="玩命加载中..." Name="Loading"  Height="40"  Margin="20,20,0,0" Visibility="Collapsed" HorizontalAlignment="Left"></TextBlock>
+
 
                     <StackPanel x:Name="Overview">
 

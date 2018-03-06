@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Threading;
+using System.Data;
 using sys_monitor_tool.entity;
 
 namespace sys_monitor_tool {
@@ -19,15 +20,10 @@ namespace sys_monitor_tool {
     /// ProcessView.xaml 的交互逻辑
     /// </summary>
     public partial class ProcessView : Window {
-        private static Window window;
         public static void NewWindow( Window owner, Process process, DataSource dataSource ) {
-            if( window != null ) {
-                window.Close();
-                window = null;
-            }
-            window = new ProcessView(process, dataSource);
+            var window = new ProcessView(process, dataSource);
             window.Owner = owner;
-            window.Show();
+            window.ShowDialog();
         }
 
         Process process;
@@ -39,28 +35,33 @@ namespace sys_monitor_tool {
             this.process = process;
             this.dataSource = dataSource;
 
-            Name.Text = process.ProcessName;
+            var builder = new DetailPageDataBuilder();
+            builder.Build( "进程名称", process.ProcessName );
 
-            new Thread(() => {
-                Dispatcher.Invoke(() => {
-                    FillStatus();
-                    NoticeTarget.Text = Common.GetNoticeTarget(dataSource, process.NoticeTarget);
-                });
-            }).Start();
+            ContentList.DataContext = builder.DataSource;
+
+            ThreadPool.QueueUserWorkItem( delegate {
+                var processStatus = dataSource.GetProcessStatus();
+                var currStatus = processStatus.Find( item => item.ID == process.ID );
+                if( currStatus == null ) {
+                    return;
+                }
+                var status = currStatus.Status ? currStatus.StatusDesc : currStatus.Message;
+                Dispatcher.Invoke( delegate {
+                    builder.Build( "状态", status );
+                } );
+            } );
+
+            ThreadPool.QueueUserWorkItem( delegate {
+                Dispatcher.Invoke( delegate {
+                    builder.Build( "通知人员", Common.GetNoticeTarget( dataSource, process.NoticeTarget ) );
+                } );
+            } );
         }
 
-        private void FillStatus() {
-            var processStatus = dataSource.GetProcessStatus();
-            var currStatus = processStatus.Find(item => item.ID == process.ID);
-            if( currStatus == null ) {
-                return;
-            }
-            if( currStatus.Status ) {
-                Status.Text = currStatus.StatusDesc;
-            } else {
-                Status.Foreground = Brushes.Red;
-                Status.Text = currStatus.Message;
-            }
+        private void MenuItem_Click( object sender, RoutedEventArgs e ) {
+            var item = ContentList.SelectedItem as DataRowView;
+            Clipboard.SetDataObject( item[ "Value" ].ToString() );
         }
     }
 }

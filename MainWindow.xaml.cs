@@ -113,8 +113,12 @@ namespace sys_monitor_tool
             }
             var serverItem = ListenServerData.GetServerItem(id);
             var serverManager = new ServerManager(serverItem);
+            serverManager.Closed += delegate {
+                this.Show();
+            };
             serverManager.Owner = this;
             serverManager.Show();
+            this.Hide();
         }
 
         private void MenuItem_Click( object sender, RoutedEventArgs e ) {

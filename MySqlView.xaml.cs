@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
 using System.Threading;
 using sys_monitor_tool.entity;
 
@@ -19,15 +20,10 @@ namespace sys_monitor_tool {
     /// MySqlView.xaml 的交互逻辑
     /// </summary>
     public partial class MySqlView : Window {
-        private static Window window;
         public static void NewWindow( Window owner, MySql mySql, DataSource dataSource ) {
-            if( window != null ) {
-                window.Close();
-                window = null;
-            }
-            window = new MySqlView(mySql, dataSource);
+            var window = new MySqlView(mySql, dataSource);
             window.Owner = owner;
-            window.Show();
+            window.ShowDialog();
         }
 
         private MySql mysql;
@@ -39,34 +35,40 @@ namespace sys_monitor_tool {
             this.mysql = mysql;
             this.dataSource = dataSource;
 
-            Name.Text = mysql.Description;
-            Host.Text = mysql.Host;
-            Port.Text = mysql.Port;
-            User.Text = mysql.User;
-            Password.Text = mysql.Password;
-            Database.Text = mysql.Database;
-            Delay.Text = mysql.Delay + " ms";
+            var builder = new DetailPageDataBuilder();
+            builder.Build( "监控名称", mysql.Description );
+            builder.Build( "主机", mysql.Host );
+            builder.Build( "端口", mysql.Port );
+            builder.Build( "用户", mysql.User );
+            builder.Build( "密码", mysql.Password );
+            builder.Build( "数据库", mysql.Database );
+            builder.Build( "延时", mysql.Delay + " ms" );
 
-            new Thread(() => {
-                Dispatcher.Invoke(() => {
-                    FillStatus();
-                    NoticeTarget.Text = Common.GetNoticeTarget(dataSource, mysql.NoticeTarget);
-                });
-            }).Start();
+
+            ContentList.DataContext = builder.DataSource;
+  
+
+            ThreadPool.QueueUserWorkItem( delegate {
+                Dispatcher.Invoke( delegate {
+                    builder.Build( "通知人员", Common.GetNoticeTarget( dataSource, mysql.NoticeTarget ) );
+                } );
+            } );
+            ThreadPool.QueueUserWorkItem( delegate {
+                var mySqlStatus = dataSource.GetMySqlStatus();
+                var currStatus = mySqlStatus.Find( item => item.ID == mysql.ID );
+                if( currStatus == null ) {
+                    return;
+                }
+                var status = currStatus.Status ? currStatus.StatusDesc : currStatus.Message;
+                Dispatcher.Invoke( delegate {
+                    builder.Build( "状态", status );
+                } );
+            } );
         }
 
-        private void FillStatus() {
-            var mySqlStatus = dataSource.GetMySqlStatus();
-            var currStatus = mySqlStatus.Find(item => item.ID == mysql.ID);
-            if( currStatus == null ) {
-                return;
-            }
-            if( currStatus.Status ) {
-                Status.Text = currStatus.StatusDesc;
-            } else {
-                Status.Foreground = Brushes.Red;
-                Status.Text = currStatus.Message;
-            }
+        private void MenuItem_Click( object sender, RoutedEventArgs e ) {
+            var item = ContentList.SelectedItem as DataRowView;
+            Clipboard.SetDataObject( item[ "Value" ].ToString() );
         }
     }
 }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Threading;
+using System.Data;
 using sys_monitor_tool.entity;
 
 
@@ -20,15 +21,10 @@ namespace sys_monitor_tool {
     /// HttpUrlView.xaml 的交互逻辑
     /// </summary>
     public partial class HttpUrlView : Window {
-        private static Window window;
         public static void NewWindow(Window owner, HttpUrl httpUrl, DataSource dataSource ) {
-            if(window != null) {
-                window.Close();
-                window = null;
-            }
-            window = new HttpUrlView(httpUrl, dataSource);
+            var window = new HttpUrlView(httpUrl, dataSource);
             window.Owner = owner;
-            window.Show();
+            window.ShowDialog();
         }
 
         DataSource dataSource;
@@ -39,47 +35,36 @@ namespace sys_monitor_tool {
 
             InitializeComponent();
 
-            Name.Text = httpUrl.Description;
-            URL.Text = httpUrl.Url;
-            Method.Text = httpUrl.Method;
-            Delay.Text = httpUrl.Delay + " ms";
+            var builder = new DetailPageDataBuilder();
+            builder.Build( "监控名称", httpUrl.Description );
+            builder.Build( "监控链接", httpUrl.Url );
+            builder.Build( "请求方法",httpUrl.Method );
+            builder.Build( "请求延时", httpUrl.Delay + " ms" );
 
-            new Thread(()=> {
-                Dispatcher.Invoke(() => {
-                    FillStatus();
-                    NoticeTarget.Text = Common.GetNoticeTarget(dataSource, httpUrl.NoticeTarget);
-                });
-            }).Start();
-        }
+            ContentList.DataContext = builder.DataSource;
 
-        private void FillStatus() {
-            var urlStatus = dataSource.GetUrlStatus();
-            var currStatus = urlStatus.Find(item => item.ID == httpUrl.ID);
-            if(currStatus == null) {
-                return;
-            }
-            if( currStatus.Status) {
-                Status.Text = currStatus.StatusDesc;
-            } else {
-                Status.Foreground = Brushes.Red;
-                Status.Text = currStatus.Message;
-            }
+            ThreadPool.QueueUserWorkItem( delegate {
+                Dispatcher.Invoke( delegate {
+                    builder.Build( "通知人员", Common.GetNoticeTarget( dataSource, httpUrl.NoticeTarget ) );
+                } );
+            } );
+
+            ThreadPool.QueueUserWorkItem( delegate {
+                var urlStatus = dataSource.GetUrlStatus();
+                var currStatus = urlStatus.Find( item => item.ID == httpUrl.ID );
+                if( currStatus == null ) {
+                    return;
+                }
+                var status = currStatus.Status ? currStatus.StatusDesc : currStatus.Message;
+                Dispatcher.Invoke( delegate {
+                    builder.Build( "状态", status );
+                } );
+            } );
         }
 
         private void MenuItem_Click( object sender, RoutedEventArgs e ) {
-            try {
-                System.Diagnostics.Process.Start(URL.Text);
-            } catch( Exception ex ) {
-                MsgBox.Alert(ex.Message);
-            }
-        }
-
-        private void MenuItem_Click_1( object sender, RoutedEventArgs e ) {
-            var text = URL.SelectedText;
-            if( string.IsNullOrEmpty(text)) {
-                text = URL.Text;
-            }
-            Clipboard.SetDataObject(text);
+            var item = ContentList.SelectedItem as DataRowView;
+            Clipboard.SetDataObject( item[ "Value" ].ToString() );
         }
     }
 }

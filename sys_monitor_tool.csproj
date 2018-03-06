@@ -41,7 +41,7 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>sys_monitor_tool.EntryPoint</StartupObject>
+    <StartupObject>sys_monitor_tool.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
@@ -66,10 +66,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WpfAnimatedGif, Version=1.4.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\WpfAnimatedGif.1.4.15\lib\net\WpfAnimatedGif.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -79,6 +75,7 @@
     <Compile Include="AuthMessageManager.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="DataSource.cs" />
+    <Compile Include="DetailPageDataBuilder.cs" />
     <Compile Include="entity\EntityBase.cs" />
     <Compile Include="entity\HistoryDetailItem.cs" />
     <Compile Include="entity\HistoryItem.cs" />
