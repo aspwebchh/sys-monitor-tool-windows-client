@@ -65,6 +65,7 @@ namespace sys_monitor_tool
             new Thread(() => {
                 var data = dataSource.GetUserList();
                 window.Dispatcher.Invoke(() => {
+                    SetListViewHeight( window.UserList );
                     window.UserList.DataContext = data;
                     window.UserList.Visibility = Visibility.Visible;
                     HideLoading();

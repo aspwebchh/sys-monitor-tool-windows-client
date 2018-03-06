@@ -60,5 +60,9 @@ namespace sys_monitor_tool {
         protected void ShowLoading() {
             window.Loading.Visibility = Visibility.Visible;
         }
+
+        protected void SetListViewHeight( ListView listView ) {
+            listView.Height = window.ContentPanel.ActualHeight;
+        }
     }
 }

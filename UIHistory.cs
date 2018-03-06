@@ -21,6 +21,8 @@ namespace sys_monitor_tool {
                     return (int) (DateTime.Parse( a.Date ) - DateTime.Parse( b.Date )).TotalHours;
                 } );
                 window.Dispatcher.Invoke( () => {
+                    SetListViewHeight( window.HistoryList );
+                    window.HistoryList.Height = window.ContentPanel.ActualHeight;
                     window.HistoryList.DataContext = data;
                     window.HistoryList.Visibility = System.Windows.Visibility.Visible;
                     HideLoading();
