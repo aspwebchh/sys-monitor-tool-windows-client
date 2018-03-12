@@ -77,19 +77,7 @@ namespace sys_monitor_tool
         {
             var wind = new ListenServerForm();
             wind.Owner = this;
-            wind.Show();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            var id = GetSelectedItemID();
-            if( string.IsNullOrEmpty(id) ) {
-                return;
-            }
-            var serverItem = ListenServerData.GetServerItem(id);
-            var wind = new ListenServerForm( serverItem);
-            wind.Owner = this;
-            wind.Show();
+            wind.ShowDialog();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -125,7 +113,7 @@ namespace sys_monitor_tool
             var id = GetSelectedItemID();
             var property = new ServerProperty( id );
             property.Owner = this;
-            property.Show();
+            property.ShowDialog();
         }
     }
 }
