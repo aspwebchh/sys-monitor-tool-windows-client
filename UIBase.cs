@@ -47,7 +47,7 @@ namespace sys_monitor_tool {
                     }
                     return item;
                 }).ToList();
-                window.Dispatcher.Invoke(() => {
+                window.Dispatcher.Invoke( (Action)delegate {
                     listView.DataContext = data;
                 });
             });

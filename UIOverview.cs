@@ -31,7 +31,7 @@ namespace sys_monitor_tool {
                 var mySqlNormal = mySqlStatus.Where( item => item.Status ).Count();
                 var mySqlError = mySqlAllCount - mySqlNormal;
 
-                window.Dispatcher.Invoke( () => {
+                window.Dispatcher.Invoke( (Action)delegate {
                     window.MySQL_All.Text = mySqlAllCount.ToString();
                     window.MySQL_Normal.Text = mySqlNormal.ToString();
                     window.MySQL_Error.Text = mySqlError.ToString();
@@ -50,7 +50,7 @@ namespace sys_monitor_tool {
                 var processNormal = processStatus.Where( item => item.Status ).Count();
                 var processError = processAllCount - processNormal;
 
-                window.Dispatcher.Invoke( () => {
+                window.Dispatcher.Invoke( (Action)delegate {
                     window.Process_All.Text = processAllCount.ToString();
                     window.Process_Normal.Text = processNormal.ToString();
                     window.Process_Error.Text = processError.ToString();
@@ -69,7 +69,7 @@ namespace sys_monitor_tool {
                 var urlNormal = urlStatus.Where( item => item.Status ).Count();
                 var urlError = urlAllCount - urlNormal;
 
-                window.Dispatcher.Invoke( () => {
+                window.Dispatcher.Invoke( (Action)delegate {
                     window.Url_All.Text = urlAllCount.ToString();
                     window.Url_Normal.Text = urlNormal.ToString();
                     window.Url_Error.Text = urlError.ToString();

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using sys_monitor_tool.entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace sys_monitor_tool
 {
@@ -30,6 +32,36 @@ namespace sys_monitor_tool
                 return item != null ? item.Name : "";
             }).Distinct();
             return string.Join("，", names); 
+        }
+
+
+        public static Task<string> GetNoticeTargetNamesAsync( DataSource dataSource, string noticeTargetIDs ) {
+            return Task.Factory.StartNew( delegate {
+                return Common.GetNoticeTarget( dataSource, noticeTargetIDs );
+            } );
+        }
+
+        public static Task<string> GetStatusAsync( Func<List<EntityStatus>> getStatusSrc, int id ) {
+            return Task.Factory.StartNew( delegate {
+                var mySqlStatus = getStatusSrc();
+                var currStatus = mySqlStatus.Find( item => item.ID == id );
+                if( currStatus == null ) {
+                    return string.Empty;
+                }
+                var status = currStatus.Status ? currStatus.StatusDesc : currStatus.Message;
+                return status;
+            } );
+        }
+
+
+        public static string DataTableToString( DataTable datatable ) {
+            return datatable.Rows.Cast<DataRow>().Select( row => {
+                var name = row[ "Name" ].ToString();
+                var value = row[ "Value" ].ToString();
+                return name + "：" + value;
+            } ).Aggregate( delegate ( string a, string b ) {
+                return a + "\n" + b;
+            } );
         }
     }
 }

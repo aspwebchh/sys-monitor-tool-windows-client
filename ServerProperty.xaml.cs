@@ -68,7 +68,7 @@ namespace sys_monitor_tool {
             if( mailInfo == null ) {
                 return;
             }
-            Dispatcher.Invoke( delegate () {
+            Dispatcher.Invoke( (Action)delegate () {
                 Mail.Text = mailInfo.Email;
                 Password.Password = mailInfo.Password;
                 SmtpServer.Text = mailInfo.SmtpServer;

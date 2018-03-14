@@ -86,7 +86,7 @@ namespace sys_monitor_tool {
 
             new Thread(() => {
                 var data = dataSource.GetMySqlList();
-                window.Dispatcher.Invoke(() => {
+                window.Dispatcher.Invoke( (Action)delegate {
                     SetListViewHeight( window.MySqlList );
                     window.MySqlList.DataContext = data;
                     window.MySqlList.Visibility = Visibility.Visible;

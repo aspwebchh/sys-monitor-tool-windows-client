@@ -21,6 +21,7 @@ namespace sys_monitor_tool {
     /// HttpUrlView.xaml 的交互逻辑
     /// </summary>
     public partial class HttpUrlView : Window {
+        DetailPageDataBuilder builder;
         public static void NewWindow(Window owner, HttpUrl httpUrl, DataSource dataSource ) {
             var window = new HttpUrlView(httpUrl, dataSource);
             window.Owner = owner;
@@ -35,36 +36,29 @@ namespace sys_monitor_tool {
 
             InitializeComponent();
 
-            var builder = new DetailPageDataBuilder();
+            builder = new DetailPageDataBuilder();
             builder.Build( "监控名称", httpUrl.Description );
             builder.Build( "监控链接", httpUrl.Url );
             builder.Build( "请求方法",httpUrl.Method );
             builder.Build( "请求延时", httpUrl.Delay + " ms" );
 
+            var noticeTargetTask = Common.GetNoticeTargetNamesAsync( dataSource, httpUrl.NoticeTarget );
+            var statusTask = Common.GetStatusAsync( delegate {
+                return dataSource.GetUrlStatus();
+            }, httpUrl.ID );
+            builder.Build( "通知人员", noticeTargetTask.Result );
+            builder.Build( "状态", statusTask.Result );
             ContentList.DataContext = builder.DataSource;
-
-            ThreadPool.QueueUserWorkItem( delegate {
-                Dispatcher.Invoke( delegate {
-                    builder.Build( "通知人员", Common.GetNoticeTarget( dataSource, httpUrl.NoticeTarget ) );
-                } );
-            } );
-
-            ThreadPool.QueueUserWorkItem( delegate {
-                var urlStatus = dataSource.GetUrlStatus();
-                var currStatus = urlStatus.Find( item => item.ID == httpUrl.ID );
-                if( currStatus == null ) {
-                    return;
-                }
-                var status = currStatus.Status ? currStatus.StatusDesc : currStatus.Message;
-                Dispatcher.Invoke( delegate {
-                    builder.Build( "状态", status );
-                } );
-            } );
         }
 
         private void MenuItem_Click( object sender, RoutedEventArgs e ) {
             var item = ContentList.SelectedItem as DataRowView;
             Clipboard.SetDataObject( item[ "Value" ].ToString() );
+        }
+
+        private void MenuItem_Click_Copy_All( object sender, RoutedEventArgs e ) {
+            var copied = Common.DataTableToString( builder.DataSource );
+            Clipboard.SetDataObject( copied );
         }
     }
 }

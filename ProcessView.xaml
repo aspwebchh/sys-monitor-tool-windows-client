@@ -122,6 +122,7 @@
             <ContextMenu>
                 <MenuItem Header="拷贝" Click="MenuItem_Click">
                 </MenuItem>
+                <MenuItem Header="拷贝所有" Click="MenuItem_Click_Copy_All"></MenuItem>
             </ContextMenu>
         </ListView.ContextMenu>
         <ListView.View>
@@ -139,7 +140,7 @@
                         <GridViewColumnHeader Content="值" HorizontalContentAlignment="Left" Padding="10,0,0,0" />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock  Text="{Binding Value}"></TextBlock>
+                                <TextBlock  Text="{Binding Value}" ToolTip="{Binding Value}"></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

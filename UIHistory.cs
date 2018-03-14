@@ -20,7 +20,7 @@ namespace sys_monitor_tool {
                 data.Sort( delegate ( HistoryItem b, HistoryItem a ) {
                     return (int) (DateTime.Parse( a.Date ) - DateTime.Parse( b.Date )).TotalHours;
                 } );
-                window.Dispatcher.Invoke( () => {
+                window.Dispatcher.Invoke( (Action)delegate {
                     SetListViewHeight( window.HistoryList );
                     window.HistoryList.Height = window.ContentPanel.ActualHeight;
                     window.HistoryList.DataContext = data;

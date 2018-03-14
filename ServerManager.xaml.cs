@@ -37,7 +37,7 @@ namespace sys_monitor_tool
             AuthMessageManager.Clear(listenServerItem.HttpUrl);
 
             new Thread(() => {
-                Dispatcher.Invoke(() => {
+                Dispatcher.Invoke( (Action)delegate {
                     this.listenServerItem = listenServerItem;
                     this.Title = listenServerItem.Name;
 

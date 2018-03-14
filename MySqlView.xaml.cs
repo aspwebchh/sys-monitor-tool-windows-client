@@ -20,6 +20,8 @@ namespace sys_monitor_tool {
     /// MySqlView.xaml 的交互逻辑
     /// </summary>
     public partial class MySqlView : Window {
+        DetailPageDataBuilder builder;
+
         public static void NewWindow( Window owner, MySql mySql, DataSource dataSource ) {
             var window = new MySqlView(mySql, dataSource);
             window.Owner = owner;
@@ -35,7 +37,7 @@ namespace sys_monitor_tool {
             this.mysql = mysql;
             this.dataSource = dataSource;
 
-            var builder = new DetailPageDataBuilder();
+            builder = new DetailPageDataBuilder();
             builder.Build( "监控名称", mysql.Description );
             builder.Build( "主机", mysql.Host );
             builder.Build( "端口", mysql.Port );
@@ -44,31 +46,23 @@ namespace sys_monitor_tool {
             builder.Build( "数据库", mysql.Database );
             builder.Build( "延时", mysql.Delay + " ms" );
 
-
+            var noticeTargetTask = Common.GetNoticeTargetNamesAsync( dataSource, mysql.NoticeTarget );
+            var statusTask = Common.GetStatusAsync( delegate {
+                return dataSource.GetMySqlStatus();
+            }, mysql.ID );
+            builder.Build( "通知人员", noticeTargetTask.Result );
+            builder.Build( "状态", statusTask.Result  );
             ContentList.DataContext = builder.DataSource;
-  
-
-            ThreadPool.QueueUserWorkItem( delegate {
-                Dispatcher.Invoke( delegate {
-                    builder.Build( "通知人员", Common.GetNoticeTarget( dataSource, mysql.NoticeTarget ) );
-                } );
-            } );
-            ThreadPool.QueueUserWorkItem( delegate {
-                var mySqlStatus = dataSource.GetMySqlStatus();
-                var currStatus = mySqlStatus.Find( item => item.ID == mysql.ID );
-                if( currStatus == null ) {
-                    return;
-                }
-                var status = currStatus.Status ? currStatus.StatusDesc : currStatus.Message;
-                Dispatcher.Invoke( delegate {
-                    builder.Build( "状态", status );
-                } );
-            } );
         }
 
         private void MenuItem_Click( object sender, RoutedEventArgs e ) {
             var item = ContentList.SelectedItem as DataRowView;
             Clipboard.SetDataObject( item[ "Value" ].ToString() );
+        }
+
+        private void MenuItem_Click_Copy_All( object sender, RoutedEventArgs e ) {
+            var copied = Common.DataTableToString( builder.DataSource );
+            Clipboard.SetDataObject( copied );
         }
     }
 }

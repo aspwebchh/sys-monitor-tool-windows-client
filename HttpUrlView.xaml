@@ -119,6 +119,7 @@
             <ContextMenu>
                 <MenuItem Header="拷贝" Click="MenuItem_Click">
                 </MenuItem>
+                <MenuItem Header="拷贝所有" Click="MenuItem_Click_Copy_All"></MenuItem>
             </ContextMenu>
         </ListView.ContextMenu>
         <ListView.View>
@@ -136,7 +137,7 @@
                         <GridViewColumnHeader Content="值" HorizontalContentAlignment="Left" Padding="10,0,0,0" />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock  Text="{Binding Value}"></TextBlock>
+                                <TextBlock  Text="{Binding Value}" ToolTip="{Binding Value}"></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -144,51 +145,4 @@
             </GridView>
         </ListView.View>
     </ListView>
-    
-    <!--<Grid Margin="0,10,0,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="35"></RowDefinition>
-            <RowDefinition Height="35"></RowDefinition>
-            <RowDefinition Height="35"></RowDefinition>
-            <RowDefinition Height="35"></RowDefinition>
-            <RowDefinition Height="35"></RowDefinition>
-            <RowDefinition Height="35"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-
-        <WrapPanel Grid.Row="0" Grid.Column="0" Style="{StaticResource ViewPageRow}">
-            <TextBlock Text="监控名称：" Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
-            <TextBox Name="Name" IsReadOnly="True" BorderThickness="0"></TextBox>
-        </WrapPanel>
-        <WrapPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource ViewPageRow}">
-            <TextBlock Text="监控链接："  Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
-            <TextBox Name="URL" IsReadOnly="True" BorderThickness="0" MaxWidth="380">
-                <TextBox.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="前往" Click="MenuItem_Click"></MenuItem>
-                        <MenuItem Header="复制" Click="MenuItem_Click_1"></MenuItem>
-                    </ContextMenu>
-                </TextBox.ContextMenu>
-            </TextBox>
-        </WrapPanel>
-        <WrapPanel Grid.Row="2" Grid.Column="0" Style="{StaticResource ViewPageRow}">
-            <TextBlock Text="请求方法："  Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
-            <TextBlock Name="Method"></TextBlock>
-        </WrapPanel>
-        <WrapPanel Grid.Row="3" Grid.Column="0" Style="{StaticResource ViewPageRow}">
-            <TextBlock Text="当前状态："  Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
-            <TextBox Name="Status" IsReadOnly="True" BorderThickness="0" MaxWidth="380"></TextBox>
-        </WrapPanel>
-        <WrapPanel Grid.Row="4" Grid.Column="0" Style="{StaticResource ViewPageRow}">
-            <TextBlock Text="请求延时："  Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
-            <TextBlock Name="Delay"></TextBlock>
-        </WrapPanel>
-        <WrapPanel Grid.Row="5" Grid.Column="0" Style="{StaticResource ViewPageRow}">
-            <TextBlock Text="通知人员："  Style="{StaticResource ViewPageFieldTitle }"></TextBlock>
-            <TextBlock Name="NoticeTarget" MaxWidth="380"></TextBlock>
-        </WrapPanel>
-        
-    </Grid>-->
 </Window>

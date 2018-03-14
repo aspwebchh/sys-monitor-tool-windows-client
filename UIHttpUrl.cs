@@ -78,7 +78,7 @@ namespace sys_monitor_tool
 
             new Thread(() => {
                 var data = dataSource.GetUrlList();
-                window.Dispatcher.Invoke(() => {
+                window.Dispatcher.Invoke( (Action)delegate {
                     SetListViewHeight( window.HttpUrlList );
                     window.HttpUrlList.DataContext = data;
                     window.HttpUrlList.Visibility = Visibility.Visible;

@@ -36,7 +36,7 @@ namespace sys_monitor_tool {
                     item.MonitorName = targetName;
                     return item; 
                 } ).ToList();
-                this.Dispatcher.Invoke( delegate () {
+                this.Dispatcher.Invoke( (Action)delegate () {
                     HistoryList.DataContext = result;
                 } );
             } ).Start();

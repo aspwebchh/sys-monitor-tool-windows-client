@@ -20,6 +20,7 @@ namespace sys_monitor_tool {
     /// ProcessView.xaml 的交互逻辑
     /// </summary>
     public partial class ProcessView : Window {
+        DetailPageDataBuilder builder;
         public static void NewWindow( Window owner, Process process, DataSource dataSource ) {
             var window = new ProcessView(process, dataSource);
             window.Owner = owner;
@@ -35,33 +36,27 @@ namespace sys_monitor_tool {
             this.process = process;
             this.dataSource = dataSource;
 
-            var builder = new DetailPageDataBuilder();
+            builder = new DetailPageDataBuilder();
             builder.Build( "进程名称", process.ProcessName );
 
+
+            var noticeTargetTask = Common.GetNoticeTargetNamesAsync( dataSource, process.NoticeTarget );
+            var statusTask = Common.GetStatusAsync( delegate {
+                return dataSource.GetProcessStatus();
+            }, process.ID );
+            builder.Build( "通知人员", noticeTargetTask.Result );
+            builder.Build( "状态", statusTask.Result );
             ContentList.DataContext = builder.DataSource;
-
-            ThreadPool.QueueUserWorkItem( delegate {
-                var processStatus = dataSource.GetProcessStatus();
-                var currStatus = processStatus.Find( item => item.ID == process.ID );
-                if( currStatus == null ) {
-                    return;
-                }
-                var status = currStatus.Status ? currStatus.StatusDesc : currStatus.Message;
-                Dispatcher.Invoke( delegate {
-                    builder.Build( "状态", status );
-                } );
-            } );
-
-            ThreadPool.QueueUserWorkItem( delegate {
-                Dispatcher.Invoke( delegate {
-                    builder.Build( "通知人员", Common.GetNoticeTarget( dataSource, process.NoticeTarget ) );
-                } );
-            } );
         }
 
         private void MenuItem_Click( object sender, RoutedEventArgs e ) {
             var item = ContentList.SelectedItem as DataRowView;
             Clipboard.SetDataObject( item[ "Value" ].ToString() );
+        }
+
+        private void MenuItem_Click_Copy_All( object sender, RoutedEventArgs e ) {
+            var copied = Common.DataTableToString( builder.DataSource );
+            Clipboard.SetDataObject( copied );
         }
     }
 }
