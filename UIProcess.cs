@@ -15,7 +15,7 @@ namespace sys_monitor_tool {
 
 
         public UIProcess( ServerManager window, DataSource dataSource ) : base(window, dataSource) {
-            processNoticeTargetContainer = new NoticeTargetContainer(window.ProcessNoticeTarget, dataSource);
+            processNoticeTargetContainer = new NoticeTargetContainer(window.ProcessNoticeTarget, dataSource,window);
 
             window.Procress_Save_Btn.Click += Procress_Save_Btn_Click;
         }

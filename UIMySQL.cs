@@ -17,7 +17,7 @@ namespace sys_monitor_tool {
 
 
         public UIMySQL( ServerManager window, DataSource dataSource ) : base(window, dataSource){
-            mySqlNoticeTargetContainer = new NoticeTargetContainer(window.MySqlNoticeTarget, dataSource);
+            mySqlNoticeTargetContainer = new NoticeTargetContainer(window.MySqlNoticeTarget, dataSource,window);
             window.MySql_Save_Btn.Click += MySql_Save_Btn_Click;
         }
 
@@ -84,16 +84,16 @@ namespace sys_monitor_tool {
             this.HideAllElement();
             this.ShowLoading();
 
-            new Thread(() => {
+            ThreadPool.QueueUserWorkItem( delegate {
                 var data = dataSource.GetMySqlList();
                 window.Dispatcher.Invoke( (Action)delegate {
                     SetListViewHeight( window.MySqlList );
                     window.MySqlList.DataContext = data;
                     window.MySqlList.Visibility = Visibility.Visible;
                     HideLoading();
-                });
-                this.UpdateStatus(window.MySqlList, data.Select(item => item as EntityBase).ToList(), UpdateStatusTaskType.MySql, dataSource.GetMySqlStatus);
-            }).Start();
+                } );
+                this.UpdateStatus( window.MySqlList, data.Select( item => item as EntityBase ).ToList(), UpdateStatusTaskType.MySql, dataSource.GetMySqlStatus );
+            } );
            
         }
 

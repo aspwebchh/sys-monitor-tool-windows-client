@@ -36,24 +36,22 @@ namespace sys_monitor_tool
 
             AuthMessageManager.Clear(listenServerItem.HttpUrl);
 
-            new Thread(() => {
-                Dispatcher.Invoke( (Action)delegate {
-                    this.listenServerItem = listenServerItem;
-                    this.Title = listenServerItem.Name;
+            this.listenServerItem = listenServerItem;
+            this.Title = listenServerItem.Name;
 
-                    this.dataSource = new DataSource(listenServerItem);
-                    this.uiMySql = new UIMySQL(this, dataSource);
-                    this.uiProcess = new UIProcess(this, dataSource);
-                    this.uiHttpUrl = new UIHttpUrl(this, dataSource);
-                    this.uiUser = new UIUser(this, dataSource);
-                    this.uiOverview = new UIOverview( this, dataSource );
-                    this.uiHistory = new UIHistory( this, dataSource );
+            this.dataSource = new DataSource( listenServerItem );
+            this.uiMySql = new UIMySQL( this, dataSource );
+            this.uiProcess = new UIProcess( this, dataSource );
+            this.uiHttpUrl = new UIHttpUrl( this, dataSource );
+            this.uiUser = new UIUser( this, dataSource );
+            this.uiOverview = new UIOverview( this, dataSource );
+            this.uiHistory = new UIHistory( this, dataSource );
 
-                    if( CheckServerStatus() ) {
-                        CheckMailStmpServer();
-                    }
-                });
-            }).Start();
+            ThreadPool.QueueUserWorkItem( delegate {
+                if( CheckServerStatus() ) {
+                    CheckMailStmpServer();
+                }
+            } );
 
             this.Closed += ( o, e ) => {
                 UpdateStatusTaskManager.Remove( this, UpdateStatusTaskType.HttpUrl );

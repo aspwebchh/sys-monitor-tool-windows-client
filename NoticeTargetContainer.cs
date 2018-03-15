@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Threading;
 
 
 namespace sys_monitor_tool {
@@ -13,8 +14,10 @@ namespace sys_monitor_tool {
         private WrapPanel container;
         private DataSource dataSource;
         private Dictionary<CheckBox, int> dic = new Dictionary<CheckBox, int>();
+        private Window owner;
 
-        public NoticeTargetContainer( WrapPanel container, DataSource dataSource) {
+        public NoticeTargetContainer( WrapPanel container, DataSource dataSource, Window owner) {
+            this.owner = owner;
             this.container = container;
             this.dataSource = dataSource;
             this.Fill();
@@ -22,16 +25,20 @@ namespace sys_monitor_tool {
 
         private void Fill() {
             container.Children.Clear();
-            var users = dataSource.GetUserList();
-            foreach(var user in users) {
-                var checkbox = new CheckBox();
-                var text = new TextBlock();
-                text.Text = user.Name;
-                checkbox.Content = text;
-                checkbox.Margin = new Thickness(0,0,15,0);
-                dic.Add(checkbox, user.ID);
-                container.Children.Add(checkbox);
-            }
+            ThreadPool.QueueUserWorkItem( delegate {
+                var users = dataSource.GetUserList();
+                owner.Dispatcher.Invoke( (Action)delegate {
+                    foreach( var user in users ) {
+                        var checkbox = new CheckBox();
+                        var text = new TextBlock();
+                        text.Text = user.Name;
+                        checkbox.Content = text;
+                        checkbox.Margin = new Thickness( 0, 0, 15, 0 );
+                        dic.Add( checkbox, user.ID );
+                        container.Children.Add( checkbox );
+                    }
+                } );
+            } );
         }
 
         public void Refresh() {

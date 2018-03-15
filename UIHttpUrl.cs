@@ -17,7 +17,7 @@ namespace sys_monitor_tool
         private int currentItemId;
 
         public UIHttpUrl(ServerManager window, DataSource dataSource) : base(window, dataSource){
-            httpUrlNoticeTargetContainer = new NoticeTargetContainer(window.HttpUrlNoticeTarget, dataSource);
+            httpUrlNoticeTargetContainer = new NoticeTargetContainer(window.HttpUrlNoticeTarget, dataSource, window);
 
             window.HttpUrl_Save_Btn.Click += HttpUrl_Save_Btn_Click;
         }
