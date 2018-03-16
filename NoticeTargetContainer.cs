@@ -15,6 +15,7 @@ namespace sys_monitor_tool {
         private DataSource dataSource;
         private Dictionary<CheckBox, int> dic = new Dictionary<CheckBox, int>();
         private Window owner;
+        private Task genUserCheckboxesTask;
 
         public NoticeTargetContainer( WrapPanel container, DataSource dataSource, Window owner) {
             this.owner = owner;
@@ -25,7 +26,8 @@ namespace sys_monitor_tool {
 
         private void Fill() {
             container.Children.Clear();
-            ThreadPool.QueueUserWorkItem( delegate {
+
+            genUserCheckboxesTask = Task.Factory.StartNew( delegate {
                 var users = dataSource.GetUserList();
                 owner.Dispatcher.Invoke( (Action)delegate {
                     foreach( var user in users ) {
@@ -57,14 +59,17 @@ namespace sys_monitor_tool {
 
         public void Select( List<int> selectVals)
         {
-            foreach (var checkbox in dic.Keys)
-            {
-                var val = dic[checkbox];
-                if(selectVals.Contains(val))
-                {
-                    checkbox.IsChecked = true;
-                }
-            }
+            ThreadPool.QueueUserWorkItem( delegate {
+                genUserCheckboxesTask.Wait();
+                owner.Dispatcher.Invoke( (Action)delegate {
+                    foreach( var checkbox in dic.Keys ) {
+                        var val = dic[ checkbox ];
+                        if( selectVals.Contains( val ) ) {
+                            checkbox.IsChecked = true;
+                        }
+                    }
+                } );
+            } );
         }
 
         public void UnSelectAll()
