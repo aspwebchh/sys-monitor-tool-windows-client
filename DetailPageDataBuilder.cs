@@ -14,13 +14,19 @@ namespace sys_monitor_tool {
             dataTable.Columns.Add( new DataColumn( "Name", typeof( string ) ) );
             dataTable.Columns.Add( new DataColumn( "Value", typeof( string ) ) );
             dataTable.Columns.Add( new DataColumn( "Color", typeof( string ) ) );
+            dataTable.Columns.Add( new DataColumn( "RealValue", typeof( string ) ) );
         }
 
-        public void Build( string name, string value ) {
+        public void Build( string name, string value, string realValue = null ) {
             var row = dataTable.NewRow();
             row[ "Name" ] = name;
             row[ "Value" ] = value;
             row[ "Color" ] = Common.DEFAULT_TEXT_COLOR;
+            if( string.IsNullOrEmpty( realValue ) ) {
+                row[ "RealValue" ] = value;
+            } else {
+                row[ "RealValue" ] = realValue;
+            }
             dataTable.Rows.Add( row );
         }
 

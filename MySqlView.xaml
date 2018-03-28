@@ -137,7 +137,7 @@
                         <GridViewColumnHeader Content="值" HorizontalContentAlignment="Left" Padding="10,0,0,0" />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock  Text="{Binding Value}" ToolTip="{Binding Value}" ></TextBlock>
+                                <TextBlock  Text="{Binding Value}" ToolTip="{Binding RealValue}" ></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

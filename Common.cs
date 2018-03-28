@@ -57,7 +57,7 @@ namespace sys_monitor_tool
         public static string DataTableToString( DataTable datatable ) {
             return datatable.Rows.Cast<DataRow>().Select( row => {
                 var name = row[ "Name" ].ToString();
-                var value = row[ "Value" ].ToString();
+                var value = row[ "RealValue" ].ToString();
                 return name + "：" + value;
             } ).Aggregate( delegate ( string a, string b ) {
                 return a + "\n" + b;

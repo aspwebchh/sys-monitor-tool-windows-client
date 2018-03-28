@@ -42,7 +42,7 @@ namespace sys_monitor_tool {
             builder.Build( "主机", mysql.Host );
             builder.Build( "端口", mysql.Port );
             builder.Build( "用户", mysql.User );
-            builder.Build( "密码", mysql.Password );
+            builder.Build( "密码", "●●●●●●", mysql.Password );
             builder.Build( "数据库", mysql.Database );
             builder.Build( "延时", mysql.Delay + " ms" );
 
@@ -57,7 +57,7 @@ namespace sys_monitor_tool {
 
         private void MenuItem_Click( object sender, RoutedEventArgs e ) {
             var item = ContentList.SelectedItem as DataRowView;
-            Clipboard.SetDataObject( item[ "Value" ].ToString() );
+            Clipboard.SetDataObject( item[ "RealValue" ].ToString() );
         }
 
         private void MenuItem_Click_Copy_All( object sender, RoutedEventArgs e ) {
