@@ -68,10 +68,12 @@ namespace sys_monitor_tool
                 return;
             }
             if( !mailInfo.IsValid ) {
-                var serverProperty = new ServerProperty( listenServerItem.ID );
-                serverProperty.Owner = this;
-                serverProperty.Show();
-                serverProperty.ShowMailTab();
+                Dispatcher.Invoke( (Action)delegate {
+                    var serverProperty = new ServerProperty( listenServerItem.ID );
+                    serverProperty.Owner = this;
+                    serverProperty.Show();
+                    serverProperty.ShowMailTab();
+                } );
             }
         }
 
