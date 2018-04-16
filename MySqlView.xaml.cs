@@ -52,6 +52,7 @@ namespace sys_monitor_tool {
             }, mysql.ID );
             builder.Build( "通知人员", noticeTargetTask.Result );
             builder.Build( "状态", statusTask.Result  );
+            builder.Build( "访问源", dataSource.ListenServerItem.Host );
             ContentList.DataContext = builder.DataSource;
         }
 

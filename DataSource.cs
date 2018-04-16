@@ -49,9 +49,12 @@ namespace sys_monitor_tool
 
         private readonly string urlHistoryList;
 
+        private ListenServerItem listenServerItem;
+
 
         public DataSource(ListenServerItem listenServerItem )
         {
+            this.listenServerItem = listenServerItem;
             this.key = listenServerItem.Key;
             this.baseUrl =  listenServerItem.HttpUrl;
 
@@ -92,6 +95,12 @@ namespace sys_monitor_tool
             this.urlTestSendMail = baseUrl + "/test_send_mail";
 
             this.urlHistoryList = baseUrl + "/history_file_list";
+        }
+
+        public ListenServerItem ListenServerItem {
+            get {
+                return this.listenServerItem;
+            }
         }
 
         private ServerResult<object> CheckResult( ServerResult<object> result ) {
