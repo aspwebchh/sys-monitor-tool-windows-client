@@ -60,7 +60,7 @@ namespace sys_monitor_tool
                 var value = row[ "RealValue" ].ToString();
                 return name + "：" + value;
             } ).Aggregate( delegate ( string a, string b ) {
-                return a + "\n" + b;
+                return a + Environment.NewLine + b;
             } );
         }
     }
